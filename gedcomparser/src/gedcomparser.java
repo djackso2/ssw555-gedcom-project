@@ -8,6 +8,9 @@
 // SSW-555  September 2016
 //
 
+import gedcom.IndivContainer;
+import gedcom.FamilyContainer;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.List;
@@ -92,6 +95,8 @@ public class gedcomparser {
     public static void main(String[] args) {
     	
     	FileReader fileReader;
+    	IndivContainer indivContainer = new IndivContainer();
+    	FamilyContainer familyContainer = new FamilyContainer();
     	
         initTagLists();
         
@@ -131,8 +136,31 @@ public class gedcomparser {
     			System.out.println("Level - " + lineItems[0]);
     			tag = getTag(lineItems);
     			System.out.println("Tag   - " + tag);
+    			
+    			if ((lineItems[0].equals("0")) && (tag.equals("INDI")))
+    		    {
+    				String ret;
+    				ret = indivContainer.addIndiv(lineItems[1]);
+    				System.out.println("Id   -" + ret); 
+    		    }
+    			else if ((lineItems[0].equals("0")) && (tag.equals("FAM")))
+    			{
+    				String ret;
+    				ret = familyContainer.addFam(lineItems[1]);
+    				System.out.println("Id   -" + ret); 
+    		    }
     		}
             bufReader.close();
+            
+            for (int num=0; num < indivContainer.getSize(); num++)
+            {
+            	System.out.println(indivContainer.getIndiv(num));
+            }
+            
+            for (int num=0; num < familyContainer.getSize(); num++)
+            {
+            	System.out.println(familyContainer.getFam(num));
+            }
         }
         catch (Exception e)
         {
