@@ -75,6 +75,7 @@ public class CFamily{
 	}
 	
 	//Print methods
+	//Since CFamily doesn't contain CIndivs, these are probably obsolete
 	public void printHusbAndWife(){
 		System.out.print("Husband ID: " + husbandID);
 		System.out.print("Wife ID: " + wifeID);
