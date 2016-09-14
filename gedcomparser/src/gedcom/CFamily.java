@@ -10,31 +10,31 @@ import java.util.LinkedList;
 public class CFamily{
 	
 	private String famID;
-	private CIndiv wife;
-	private CIndiv husband;
-	private LinkedList<CIndiv> children;
+	private String wifeID;
+	private String husbandID;
+	private LinkedList<String> childrenIDs;
 	private String dateMarried; //String for now, can be changed
 	private String dateDivorced; //String for now, can be changed
 	
 	
 	//Constructor for family with no children
-	public CFamily(String fID, CIndiv w, CIndiv h, String dMarried, String dVorced){
+	public CFamily(String fID, String w, String h, String dMarried, String dVorced){
 		famID = fID;
-		wife= w;
-		husband = h;
+		wifeID = w;
+		husbandID = h;
 		dateMarried = dMarried;
 		dateDivorced = dVorced;
-		children = new LinkedList<CIndiv>();
+		childrenIDs = new LinkedList<String>();
 	}
 	
 	//Constructor for family with children
-	public CFamily(String fID, CIndiv w, CIndiv h, String dMarried, String dVorced, LinkedList<CIndiv> kids){
+	public CFamily(String fID, String w, String h, String dMarried, String dVorced, LinkedList<String> kids){
 		famID = fID;
-		wife= w;
-		husband = h;
+		wifeID = w;
+		husbandID = h;
 		dateMarried = dMarried;
 		dateDivorced = dVorced;
-		children = kids;
+		childrenIDs = kids;
 	}
 		
 	//General info getters and setters
@@ -53,39 +53,37 @@ public class CFamily{
 	
 	
 	//CIndiv access
-	public CIndiv getWife(){
-		return wife;
+	public String getWifeID(){
+		return wifeID;
 	}	
-	public CIndiv getHusband(){
-		return husband;
+	public String getHusbandID(){
+		return husbandID;
 	}
-	public void setHusb(CIndiv husb){
-		husband = husb;
+	public void setHusbandID(String husb){
+		husbandID = husb;
 	}
-	public void setWife(CIndiv w){
-		wife = w;
+	public void setWifeID(String w){
+		wifeID = w;
 	}
 	
 	//Adding and accessing children	
-	public void addChild(CIndiv kid){
-		children.add(kid);
+	public void addChild(String kid){
+		childrenIDs.add(kid);
 	}
-	public LinkedList<CIndiv> getChildren(){
-		return children;
+	public LinkedList<String> getChildren(){
+		return childrenIDs;
 	}
 	
 	//Print methods
 	public void printHusbAndWife(){
-		System.out.print("Husband: ");
-		husband.printIndivIDAndName();
-		System.out.print("Wife: ");
-		husband.printIndivIDAndName();
+		System.out.print("Husband ID: " + husbandID);
+		System.out.print("Wife ID: " + wifeID);
 	}	
+
 	public void printKids(){
-		Iterator<CIndiv> listIt = children.iterator();
-		System.out.println("Children:");
+		Iterator<String> listIt = childrenIDs.iterator();
 		while(listIt.hasNext()){
-			listIt.next().printIndivIDAndName();
+			System.out.println(listIt.next());
 		}
 	}
 	
