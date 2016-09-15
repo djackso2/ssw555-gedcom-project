@@ -15,6 +15,7 @@ import gedcom.CFamily;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -82,8 +83,8 @@ public class gedcomparser {
 		for (int num=0; num < familyContainer.getSize(); num++)
 		{
 			fam = familyContainer.getFam(num);
-			fam.printHusbAndWife();
-			fam.printKids();
+			System.out.println("TODO: Print Husband And Wife Name and ID");;
+			System.out.println("TODO: Print Kids Names and IDs");
 		}
 	}
 	
@@ -149,7 +150,7 @@ public class gedcomparser {
 		{
 			fileReader = new FileReader(gedcomfile);
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
 			System.err.format("Exception occurred trying to open '%s'.", gedcomfile);
 			return;
@@ -277,9 +278,12 @@ public class gedcomparser {
 			bufReader.close();
         
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
-			System.err.format("Exception occurred reading file");
+			System.err.format("Exception occurred reading file" + e.getMessage());
+		}
+		catch (NullPointerException nE){
+			System.err.format("Null pointer: " + nE.getMessage() );
 		}
 	}
 	

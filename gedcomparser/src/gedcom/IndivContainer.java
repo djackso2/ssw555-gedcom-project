@@ -24,7 +24,7 @@ public class IndivContainer extends GedcomContainer<Cindiv> {
 		for (indx = 0; indx < myList.size(); indx++)
 		{
 			indiv = myList.get(indx);
-			listId = indiv.getIndivID();
+			listId = indiv.getId();
 			if ((listId.length() >= id.length()) &&
 				(listId.compareTo(id) > 0))
 			{
