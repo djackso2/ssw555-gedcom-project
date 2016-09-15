@@ -2,33 +2,36 @@ package gedcom;
 
 //TBD change type to Family
 
-public class FamilyContainer extends GedcomContainer<String> {
+public class FamilyContainer extends GedcomContainer<CFamily> {
 	
 	public FamilyContainer()
 	{
 		
 	}
 	
-	public String getFam(int indx)
+	public CFamily getFam(int indx)
 	{
 	   return( myList.get(indx));
 	}
 	
-	public String addFam(String id)
+	public CFamily addFam(String id)
 	{
 		int indx;
+		CFamily fam;
 		String listId;
 		
 		for (indx = 0; indx < myList.size(); indx++)
 		{
-			listId = myList.get(indx);
+			fam = myList.get(indx);
+			listId = fam.getFamID();
 			if ((listId.length() >= id.length()) &&
 				(listId.compareTo(id) > 0))
 			{
 				break;
 			}
 		}
-		myList.add(indx, id);
+		fam = new CFamily(id);
+		myList.add(indx, fam);
 		return( myList.get(indx));
 	}
 }

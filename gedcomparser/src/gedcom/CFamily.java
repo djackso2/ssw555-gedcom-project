@@ -1,4 +1,5 @@
 package gedcom;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -16,6 +17,9 @@ public class CFamily{
 	private String dateMarried; //String for now, can be changed
 	private String dateDivorced; //String for now, can be changed
 	
+	public CFamily(String fID) {
+		famID = fID;
+	}
 	
 	//Constructor for family with no children
 	public CFamily(String fID, String w, String h, String dMarried, String dVorced){

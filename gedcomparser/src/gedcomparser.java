@@ -10,6 +10,8 @@
 
 import gedcom.IndivContainer;
 import gedcom.FamilyContainer;
+import gedcom.Cindiv;
+import gedcom.CFamily;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,6 +23,18 @@ public class gedcomparser {
 	private static List<String> p1tagList;  // set of valid tags
 	private static List<String> p2tagList;  // set of valid tags
 	
+	private static IndivContainer indivContainer;
+	private static FamilyContainer familyContainer;
+	
+	// Levels that require next level data
+	public enum LVL0 {
+	    NONE, INDI, FAM 
+	}
+	public enum LVL1 {
+	    NONE, BIRT, DEAT, MARR, DIV
+	}
+
+	
 	private static void initTagLists()
 	{
 		p2tagList = new ArrayList<String>();
@@ -29,7 +43,6 @@ public class gedcomparser {
 		p1tagList.add("NAME");
 		p1tagList.add("SEX");
 		p1tagList.add("BIRT");
-		p1tagList.add("SEX");
 		p1tagList.add("DEAT");
 		p1tagList.add("FAMC");
 		p1tagList.add("FAMS");
@@ -44,6 +57,36 @@ public class gedcomparser {
 		p1tagList.add("TRLR");
 		p1tagList.add("NOTE");
 	}
+	
+	//********************************************************************
+	// Print a list of Indiv from the list
+	//********************************************************************
+	private static void printIndiv()
+	{
+		Cindiv indiv;
+    
+		for (int num=0; num < indivContainer.getSize(); num++)
+		{
+			indiv = indivContainer.getIndiv(num);
+			//TODOSystem.out.println(indiv.getName());
+		}
+	}
+	
+	//********************************************************************
+	// Print a list of Families from the list
+	//********************************************************************
+	private static void printFam()
+	{
+    	CFamily fam;
+    	
+		for (int num=0; num < familyContainer.getSize(); num++)
+		{
+			fam = familyContainer.getFam(num);
+			fam.printHusbAndWife();
+			fam.printKids();
+		}
+	}
+	
 	
 	//********************************************************************
 	// Parse the Line up to 3 parts separated by space delimiters
@@ -66,7 +109,7 @@ public class gedcomparser {
 
 	//********************************************************************
 	// Find the valid tag in the line and return it in the tag parameter
-//	    returns "Invalid tag" if a valid tag is not found 
+	//	    returns "Invalid tag" if a valid tag is not found 
 	//********************************************************************
 	private static String getTag(String items[])
 	{
@@ -89,15 +132,168 @@ public class gedcomparser {
 	}
 	
 	//********************************************************************
-	// Gedcom file parser
-	// outputs the Line, the Level and the tag for each line in the passed gedcom file
+	// Open the gedcom file 
+	// read each line and build Indiv and family lists
+	//********************************************************************
+	private static void parseFile(String gedcomfile)
+	{
+		FileReader fileReader;
+    	Cindiv indiv = null;
+    	CFamily fam = null;
+    	int level;
+    	LVL0 lvl0 = LVL0.NONE;
+    	LVL1 lvl1 = LVL1.NONE;
+
+		// Open the file for reading
+		try
+		{
+			fileReader = new FileReader(gedcomfile);
+		}
+		catch (Exception e)
+		{
+			System.err.format("Exception occurred trying to open '%s'.", gedcomfile);
+			return;
+		}
+    
+		// For each line in the file
+		try
+		{
+			BufferedReader bufReader = new BufferedReader(fileReader);
+			String line;
+			String lineItems[] = {"","",""};
+			String tag = "";
+		
+			while ((line = bufReader.readLine()) != null)
+			{    			
+				parseLine(line, lineItems);
+				tag = getTag(lineItems);
+				level = Integer.parseInt(lineItems[0]);
+			
+				// Print out the line
+				System.out.println("\nLine  - " + line);
+				System.out.println("Level - " + level);
+				System.out.println("Tag   - " + tag);
+			
+				// new Invid 
+				if ((level == 0) && (tag.equals("INDI")))
+				{
+					indiv = indivContainer.addIndiv(lineItems[1]);
+					lvl0 = LVL0.INDI;
+				}
+				//  new Family 
+				else if ((level == 0) && (tag.equals("FAM")))
+				{
+					fam = familyContainer.addFam(lineItems[1]);
+					lvl0 = LVL0.FAM; 
+				}
+				// other level 0 tags
+				else if (level == 0)
+				{
+					lvl0 = LVL0.NONE; 
+				}
+				// Process Indiv level-1
+				else if ((level == 1) && (lvl0 == LVL0.INDI))
+				{
+					lvl1 = LVL1.NONE;
+					switch (tag) {
+						case "NAME":
+							//TODOindiv.setName(lineItems[2]);
+							break;
+						case "SEX":
+							//TODOindiv.setSex(lineItems[2]);
+							break;
+						case "BIRT":
+							lvl1 = LVL1.BIRT;
+							break;
+						case "DEAT":
+							lvl1 = LVL1.DEAT;
+							break;
+						case "FAMC":
+							//TODOindiv.setFamc(lineItems[2]);
+							break;
+						case "FAMS":
+							//TODOindiv.setFams(lineItems[2]);
+							break;
+						default:
+							System.out.println("ERROR: Unprocessed INDI Level 1 line");
+					}		
+				}
+				// Process Family level-1
+				else if ((level == 1) && (lvl0 == LVL0.FAM))
+				{
+					lvl1 = LVL1.NONE;
+					switch (tag) {
+						case "MARR":
+							lvl1 = LVL1.MARR;
+							break;
+						case "HUSB":
+							// TODOfam.addHusb(lineItems[2]);
+							break;
+						case "WIFE":
+							// TODOfam.addWife(lineItems[2]);
+							break;
+						case "CHIL":
+							fam.addChild(lineItems[2]);
+							break;
+						case "DIV":
+							lvl1 = LVL1.DIV;
+							break;
+						default:
+							System.out.println("ERROR: Unprocessed FAM Level 1 line");
+					}		
+				}
+				// other level 1 tags
+				else if (level == 1)
+				{
+					lvl1 = LVL1.NONE; 
+				}
+				// Process level-2
+				else if ((level == 2) && (tag.equals("DATE")))
+				{
+					if ((lvl0 == LVL0.INDI) && (lvl1 == LVL1.BIRT))
+					{
+						//TODOindiv.setBirth(lineItems[2])
+					}
+					else if ((lvl0 == LVL0.INDI) && (lvl1 == LVL1.DEAT))
+					{
+						//TODOindiv.setDeath(lineItems[2])
+					}
+					else if ((lvl0 == LVL0.FAM) && (lvl1 == LVL1.MARR))
+					{
+						//TODOfam.setMarr(lineItems[2])
+					}
+					else if ((lvl0 == LVL0.FAM) && (lvl1 == LVL1.DIV))
+					{
+						//TODOfam.setDiv(lineItems[2])
+					}
+				}
+				else
+				{
+					lvl1 = LVL1.NONE; 
+				}	 
+				
+				
+			}
+			bufReader.close();
+        
+		}
+		catch (Exception e)
+		{
+			System.err.format("Exception occurred reading file");
+		}
+	}
+	
+	
+	//********************************************************************
+	//
+	// Main entry point of Application
+	//
 	//********************************************************************
     public static void main(String[] args) {
-    	
-    	FileReader fileReader;
-    	IndivContainer indivContainer = new IndivContainer();
-    	FamilyContainer familyContainer = new FamilyContainer();
-    	
+   
+    	indivContainer = new IndivContainer();
+    	familyContainer = new FamilyContainer();
+    	    	
         initTagLists();
         
         // Verify file name is passed
@@ -108,73 +304,16 @@ public class gedcomparser {
         }
         
         String gedcomfile = args[0]; 
-        System.out.println(gedcomfile);
+        System.out.println("File: " + gedcomfile);
         
-        // Open the file for reading
-        try
-        {
-        	fileReader = new FileReader(gedcomfile);
-        }
-        catch (Exception e)
-        {
-            System.err.format("Exception occurred trying to open '%s'.", gedcomfile);
-            return;
-        }
+        // Open and parse the file
+        parseFile(gedcomfile);
         
-        // For each line in the file
-    	try
-    	{
-    		BufferedReader bufReader = new BufferedReader(fileReader);
-    		String line;
-    		String lineItems[] = {"","",""};
-    		String tag = "";
-    		
-    		while ((line = bufReader.readLine()) != null)
-    		{    			
-    			System.out.println("\nLine  - " + line);
-    			parseLine(line, lineItems);
-    			System.out.println("Level - " + lineItems[0]);
-    			tag = getTag(lineItems);
-    			System.out.println("Tag   - " + tag);
-    			
-    			if ((lineItems[0].equals("0")) && (tag.equals("INDI")))
-    		    {
-    				String ret;
-    				ret = indivContainer.addIndiv(lineItems[1]);
-    				System.out.println("Id   -" + ret); 
-    		    }
-    			else if ((lineItems[0].equals("0")) && (tag.equals("FAM")))
-    			{
-    				String ret;
-    				ret = familyContainer.addFam(lineItems[1]);
-    				System.out.println("Id   -" + ret); 
-    		    }
-    		}
-            bufReader.close();
+        // Print the Individuals
+        printIndiv();
             
-            for (int num=0; num < indivContainer.getSize(); num++)
-            {
-            	System.out.println(indivContainer.getIndiv(num));
-            }
-            
-            for (int num=0; num < familyContainer.getSize(); num++)
-            {
-            	System.out.println(familyContainer.getFam(num));
-            }
-        }
-        catch (Exception e)
-        {
-        	System.err.format("Exception occurred reading file");
-        }
-
-    	// Close the file
-        try
-        {
-        	fileReader.close();
-        }
-        catch (Exception e)
-        {
-          System.err.format("Exception occurred closing file '%s'.", gedcomfile);
-        }
+        // Print the Families
+        printFam();
+          
     }
 }

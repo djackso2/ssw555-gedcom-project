@@ -3,33 +3,36 @@ package gedcom;
 
 //TBD change type to indiv
 
-public class IndivContainer extends GedcomContainer<String> {
+public class IndivContainer extends GedcomContainer<Cindiv> {
 	
 	public IndivContainer()
 	{
 		
 	}
 	
-	public String getIndiv(int indx)
+	public Cindiv getIndiv(int indx)
 	{
 	   return( myList.get(indx));
 	}
 	
-	public String addIndiv(String id)
+	public Cindiv addIndiv(String id)
 	{
 		int indx;
+		Cindiv indiv;
 		String listId;
 		
 		for (indx = 0; indx < myList.size(); indx++)
 		{
-			listId = myList.get(indx);
+			indiv = myList.get(indx);
+			listId = indiv.getIndivID();
 			if ((listId.length() >= id.length()) &&
 				(listId.compareTo(id) > 0))
 			{
 				break;
 			}
 		}
-		myList.add(indx, id);
+		indiv = new Cindiv(id);
+		myList.add(indx, indiv);
 		return( myList.get(indx));
 	}
 }
