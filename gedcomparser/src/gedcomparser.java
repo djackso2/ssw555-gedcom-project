@@ -66,10 +66,12 @@ public class gedcomparser {
 	{
 		Cindiv indiv;
     
+		System.out.println("\nList of Individuals");
+		
 		for (int num=0; num < indivContainer.getSize(); num++)
 		{
 			indiv = indivContainer.getIndiv(num);
-			System.out.println(indiv.getId());
+			System.out.println(indiv.getId() + "\t" + indiv.getName());
 		}
 	}
 	
@@ -82,24 +84,27 @@ public class gedcomparser {
 	{
     	CFamily fam;
     	
+    	System.out.println("\nList of Families");
+    	
 		for (int num=0; num < familyContainer.getSize(); num++)
 		{
 			fam = familyContainer.getFam(num);
-			System.out.println("Family ID: " + fam.getFamID());
+			System.out.println("\nFamily ID: " + fam.getFamID());
 			
-			System.out.println("Husband: ID-" + indivContainer.findIndiv(fam.getHusbandID()).getId() +
-				"  Name- " + indivContainer.findIndiv(fam.getHusbandID()).getName());
-			System.out.println("Wife: ID-" + indivContainer.findIndiv(fam.getWifeID()).getId() +
-					"  Name- " + indivContainer.findIndiv(fam.getWifeID()).getName());
+			System.out.println("Husband  : ID-" + indivContainer.findIndiv(fam.getHusbandID()).getId() +
+				"  \tName- " + indivContainer.findIndiv(fam.getHusbandID()).getName());
+			System.out.println("Wife     : ID-" + indivContainer.findIndiv(fam.getWifeID()).getId() +
+					"  \tName- " + indivContainer.findIndiv(fam.getWifeID()).getName());
 			
-			System.out.print("Children: ");
-			if(fam.getChildren() != null){
-				for(int i = 0; i<fam.getChildren().size(); i++){					
-					System.out.println("\nChild: ID-" + indivContainer.findIndiv(fam.getChildID(i)).getId() +
-							"  Name- " + indivContainer.findIndiv(fam.getChildID(i)).getName());															
+			if (fam.getNumberOfChildren() > 0)
+			{
+				System.out.println("Children: ");
+				for(int i = 0; i<fam.getNumberOfChildren(); i++){					
+					System.out.println("Child    : ID-" + indivContainer.findIndiv(fam.getChildID(i)).getId() +
+							"  \tName- " + indivContainer.findIndiv(fam.getChildID(i)).getName());															
 				}			
 			}else{
-				System.out.println("None");
+				System.out.println("No Children");
 			}
 		}
 	}

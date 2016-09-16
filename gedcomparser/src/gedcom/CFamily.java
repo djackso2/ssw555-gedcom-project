@@ -1,6 +1,5 @@
 package gedcom;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 //Dan Jackson
@@ -19,6 +18,7 @@ public class CFamily{
 	
 	public CFamily(String fID) {
 		famID = fID;
+		childrenIDs = new LinkedList<String>();
 	}
 	
 	//General info getters and setters
@@ -58,8 +58,8 @@ public class CFamily{
 	public String getChildID(int i){
 		return childrenIDs.get(i);
 	}
-	public LinkedList<String> getChildren(){
-		return childrenIDs;
+	public int getNumberOfChildren(){
+		return childrenIDs.size();
 	}	
 
 }
