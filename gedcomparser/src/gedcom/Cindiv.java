@@ -65,6 +65,9 @@ public class Cindiv {
 	public LinkedList<String> getFamS(){
 		return fams;
 	}
+	public void addToFamS(String ID){
+		fams.add(id);
+	}
 	public void setFamS(LinkedList<String> f){
 		fams = f;
 	}

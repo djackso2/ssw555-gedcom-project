@@ -28,11 +28,14 @@ public class CFamily{
 	public String getDateMarried(){
 		return dateMarried;
 	}		
+	public void setDateMarried(String m){
+		dateMarried = m;
+	}		
 	public String getDateDivorced(){
 		return dateDivorced;
 	}	
-	public void setDateDivorced(String dVorced){
-		dateDivorced = dVorced;
+	public void setDateDivorced(String d){
+		dateDivorced = d;
 	}	
 	public String getWifeID(){
 		return wifeID;
@@ -51,7 +54,11 @@ public class CFamily{
 	public void addChild(String kid){
 		childrenIDs.add(kid);
 	}
+	public String getChildID(int i){
+		return childrenIDs.get(i);
+	}
 	public LinkedList<String> getChildren(){
 		return childrenIDs;
 	}	
+
 }

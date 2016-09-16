@@ -35,4 +35,14 @@ public class IndivContainer extends GedcomContainer<Cindiv> {
 		myList.add(indx, indiv);
 		return( myList.get(indx));
 	}
+	
+	// Returns Cindiv object with passed in String id else returns null
+	public Cindiv findIndiv(String id){
+		for(int i=0; i< myList.size(); i++){
+			if (myList.get(i).getId().equals(id)){
+				return myList.get(i);
+			}
+		}
+		return null;
+	}
 }

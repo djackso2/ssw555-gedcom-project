@@ -69,12 +69,14 @@ public class gedcomparser {
 		for (int num=0; num < indivContainer.getSize(); num++)
 		{
 			indiv = indivContainer.getIndiv(num);
-			//TODOSystem.out.println(indiv.getName());
+			System.out.println(indiv.getId());
 		}
 	}
 	
 	//********************************************************************
 	// Print a list of Families from the list
+	// Assumption: familyContainer is populated
+	// Assumption: indivContainer is populated
 	//********************************************************************
 	private static void printFam()
 	{
@@ -83,8 +85,22 @@ public class gedcomparser {
 		for (int num=0; num < familyContainer.getSize(); num++)
 		{
 			fam = familyContainer.getFam(num);
-			System.out.println("TODO: Print Husband And Wife Name and ID");;
-			System.out.println("TODO: Print Kids Names and IDs");
+			System.out.println("Family ID: " + fam.getFamID());
+			
+			System.out.println("Husband: ID-" + indivContainer.findIndiv(fam.getHusbandID()).getId() +
+				"  Name- " + indivContainer.findIndiv(fam.getHusbandID()).getName());
+			System.out.println("Wife: ID-" + indivContainer.findIndiv(fam.getWifeID()).getId() +
+					"  Name- " + indivContainer.findIndiv(fam.getWifeID()).getName());
+			
+			System.out.print("Children: ");
+			if(fam.getChildren() != null){
+				for(int i = 0; i<fam.getChildren().size(); i++){					
+					System.out.println("\nChild: ID-" + indivContainer.findIndiv(fam.getChildID(i)).getId() +
+							"  Name- " + indivContainer.findIndiv(fam.getChildID(i)).getName());															
+				}			
+			}else{
+				System.out.println("None");
+			}
 		}
 	}
 	
@@ -198,10 +214,10 @@ public class gedcomparser {
 					lvl1 = LVL1.NONE;
 					switch (tag) {
 						case "NAME":
-							//TODOindiv.setName(lineItems[2]);
+							indiv.setName(lineItems[2]);
 							break;
 						case "SEX":
-							//TODOindiv.setSex(lineItems[2]);
+							indiv.setGender(lineItems[2]);
 							break;
 						case "BIRT":
 							lvl1 = LVL1.BIRT;
@@ -210,10 +226,10 @@ public class gedcomparser {
 							lvl1 = LVL1.DEAT;
 							break;
 						case "FAMC":
-							//TODOindiv.setFamc(lineItems[2]);
+							indiv.setFamC(lineItems[2]);
 							break;
 						case "FAMS":
-							//TODOindiv.setFams(lineItems[2]);
+							indiv.addToFamS(lineItems[2]);
 							break;
 						default:
 							System.out.println("ERROR: Unprocessed INDI Level 1 line");
@@ -228,10 +244,10 @@ public class gedcomparser {
 							lvl1 = LVL1.MARR;
 							break;
 						case "HUSB":
-							// TODOfam.addHusb(lineItems[2]);
+							fam.setHusbandID(lineItems[2]);
 							break;
 						case "WIFE":
-							// TODOfam.addWife(lineItems[2]);
+							fam.setWifeID(lineItems[2]);
 							break;
 						case "CHIL":
 							fam.addChild(lineItems[2]);
@@ -253,19 +269,19 @@ public class gedcomparser {
 				{
 					if ((lvl0 == LVL0.INDI) && (lvl1 == LVL1.BIRT))
 					{
-						//TODOindiv.setBirth(lineItems[2])
+						indiv.setDateBirth(lineItems[2]);
 					}
 					else if ((lvl0 == LVL0.INDI) && (lvl1 == LVL1.DEAT))
 					{
-						//TODOindiv.setDeath(lineItems[2])
+						indiv.setDateDeath(lineItems[2]);
 					}
 					else if ((lvl0 == LVL0.FAM) && (lvl1 == LVL1.MARR))
 					{
-						//TODOfam.setMarr(lineItems[2])
+						fam.setDateMarried(lineItems[2]);
 					}
 					else if ((lvl0 == LVL0.FAM) && (lvl1 == LVL1.DIV))
 					{
-						//TODOfam.setDiv(lineItems[2])
+						fam.setDateDivorced(lineItems[2]);
 					}
 				}
 				else
