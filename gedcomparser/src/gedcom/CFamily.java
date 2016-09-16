@@ -54,6 +54,7 @@ public class CFamily{
 	public void addChild(String kid){
 		childrenIDs.add(kid);
 	}
+	//Returns the ID of the child at index i
 	public String getChildID(int i){
 		return childrenIDs.get(i);
 	}
