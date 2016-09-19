@@ -96,16 +96,18 @@ public class gedcomparser {
 			System.out.println("Wife     : ID-" + indivContainer.findIndiv(fam.getWifeID()).getId() +
 					"  \tName- " + indivContainer.findIndiv(fam.getWifeID()).getName());
 			
-			if (fam.getNumberOfChildren() > 0)
-			{
-				System.out.println("Children: ");
-				for(int i = 0; i<fam.getNumberOfChildren(); i++){					
-					System.out.println("Child    : ID-" + indivContainer.findIndiv(fam.getChildID(i)).getId() +
-							"  \tName- " + indivContainer.findIndiv(fam.getChildID(i)).getName());															
-				}			
-			}else{
-				System.out.println("No Children");
-			}
+			// The following portion of this method prints out the children of  a family.
+			// Originally developed for Project_03 deliverable but unused.
+			//if (fam.getNumberOfChildren() > 0)
+			//{
+			//	System.out.println("Children: ");
+			//	for(int i = 0; i<fam.getNumberOfChildren(); i++){					
+			//		System.out.println("Child    : ID-" + indivContainer.findIndiv(fam.getChildID(i)).getId() +
+			//				"  \tName- " + indivContainer.findIndiv(fam.getChildID(i)).getName());															
+			//	}			
+			//}else{
+			//	System.out.println("No Children");
+			//}
 		}
 	}
 	
@@ -192,9 +194,9 @@ public class gedcomparser {
 				level = Integer.parseInt(lineItems[0]);
 			
 				// Print out the line
-				System.out.println("\nLine  - " + line);
-				System.out.println("Level - " + level);
-				System.out.println("Tag   - " + tag);
+				//System.out.println("\nLine  - " + line);
+				//System.out.println("Level - " + level);
+				//System.out.println("Tag   - " + tag);
 			
 				// new Invid 
 				if ((level == 0) && (tag.equals("INDI")))
