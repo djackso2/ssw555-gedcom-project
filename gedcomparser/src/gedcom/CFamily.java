@@ -13,16 +13,16 @@ public class CFamily{
 	private String wifeID;
 	private String husbandID;
 	private LinkedList<String> childrenIDs;
-	private String dateMarried; //String for now, can be changed
-	private String dateDivorced; //String for now, can be changed
+	private Cdate dateMarried; //String for now, can be changed
+	private Cdate dateDivorced; //String for now, can be changed
 	
 	public CFamily(String fID) {
 		famID = fID;
 		childrenIDs = new LinkedList<String>();
 		wifeID = "None";
 		husbandID = "None";
-		dateMarried = "None";
-		dateDivorced = "None";
+		dateMarried = new Cdate();
+		dateDivorced = new Cdate();
 	}
 	
 	//General info getters and setters
@@ -30,16 +30,16 @@ public class CFamily{
 		return famID;
 	}		
 	public String getDateMarried(){
-		return dateMarried;
+		return dateMarried.get();
 	}		
 	public void setDateMarried(String m){
-		dateMarried = m;
+		dateMarried.set(m);
 	}		
 	public String getDateDivorced(){
-		return dateDivorced;
+		return dateDivorced.get();
 	}	
 	public void setDateDivorced(String d){
-		dateDivorced = d;
+		dateDivorced.set(d);
 	}	
 	public String getWifeID(){
 		return wifeID;
