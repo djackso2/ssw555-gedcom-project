@@ -19,6 +19,10 @@ public class CFamily{
 	public CFamily(String fID) {
 		famID = fID;
 		childrenIDs = new LinkedList<String>();
+		wifeID = "None";
+		husbandID = "None";
+		dateMarried = "None";
+		dateDivorced = "None";
 	}
 	
 	//General info getters and setters
