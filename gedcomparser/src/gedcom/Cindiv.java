@@ -13,9 +13,9 @@ public class Cindiv {
 	private String id;
 	private String name;
 	private String gender;
-	private String dateBirth;
+	private Cdate dateBirth;
 	private Boolean isAlive;
-	private String dateDeath;
+	private Cdate dateDeath;
 	private String famc;  
 	private LinkedList<String> fams;
 	
@@ -23,9 +23,9 @@ public class Cindiv {
 		id = i;
 		name = "";
 		gender = "None";
-		dateBirth = "None";
+		dateBirth = new Cdate();
 		isAlive = true;
-		dateDeath = "None";
+		dateDeath = new Cdate();
 		famc = "None";
 		fams = new LinkedList<String>();
 	}
@@ -45,17 +45,17 @@ public class Cindiv {
 		gender = g;
 	}	
 	public String getDateBirth(){
-		return dateBirth;
+		return dateBirth.get();
 	}	
 	public void setDateBirth(String b){
-		dateBirth = b;
+		dateBirth.set(b);
 	}	
 	public String getDateDeath(){
-		return dateDeath;
+		return dateDeath.get();
 	}
 	public void setDateDeath(String d){
 		isAlive = false;
-		dateDeath = d;
+		dateDeath.set(d);
 	}	
 	public boolean getIsAlive(){
 		return isAlive;
