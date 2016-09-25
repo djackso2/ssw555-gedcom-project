@@ -22,11 +22,11 @@ public class Cindiv {
 	public Cindiv(String i){
 		id = i;
 		name = "";
-		gender = "";
-		dateBirth = "";
+		gender = "None";
+		dateBirth = "None";
 		isAlive = true;
-		dateDeath = "";
-		famc = "";
+		dateDeath = "None";
+		famc = "None";
 		fams = new LinkedList<String>();
 	}
 	public String getId(){
@@ -54,6 +54,7 @@ public class Cindiv {
 		return dateDeath;
 	}
 	public void setDateDeath(String d){
+		isAlive = false;
 		dateDeath = d;
 	}	
 	public boolean getIsAlive(){
@@ -65,8 +66,8 @@ public class Cindiv {
 	public LinkedList<String> getFamS(){
 		return fams;
 	}
-	public void addToFamS(String ID){
-		fams.add(id);
+	public void addToFamS(String f){
+		fams.add(f);
 	}
 	public void setFamS(LinkedList<String> f){
 		fams = f;
