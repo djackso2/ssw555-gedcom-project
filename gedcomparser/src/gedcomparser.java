@@ -258,6 +258,8 @@ public class gedcomparser {
 						case "FAMS":
 							indiv.addToFamS(lineItems[2]);
 							break;
+						case "NOTE":
+							break;
 						default:
 							System.out.println("ERROR: Unprocessed INDI Level 1 line");
 					}		
@@ -330,6 +332,24 @@ public class gedcomparser {
 		}
 	}
 	
+	//********************************************************************
+	// Check Death Date on Individuals
+	// 
+	//********************************************************************
+	private static void checkDeathDate()
+	{
+		Cindiv indiv;
+		
+		for (int num = 0; num < indivContainer.getSize(); num++)
+		{
+			indiv = indivContainer.getIndiv(num);
+			if (indiv.isDeathBeforeBirth()) {
+				String text = String.format("Death date (%s) of %s (%s) occurs before birth date (%s)", 
+						indiv.getDateDeath(), indiv.getName(), indiv.getId(), indiv.getDateBirth());
+				printError(true, "US03", text);
+			}
+		}
+	}
 	
 	//********************************************************************
 	//
@@ -364,7 +384,10 @@ public class gedcomparser {
         
         // ERROR Checking
         printError(true, "USTBD", "This is a test of an Error");
-        printError(true, "USTBD", "This is a test of an Anomaly");
+        printError(false, "USTBD", "This is a test of an Anomaly");
+        
+        // Check Dates US03
+        checkDeathDate();
           
     }
 }

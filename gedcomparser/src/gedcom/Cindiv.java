@@ -78,5 +78,10 @@ public class Cindiv {
 	public void setFamC(String f){
 		famc = f;
 	}
+	public Boolean isDeathBeforeBirth(){
+		Boolean retVal = false;
+		if (!isAlive) retVal = dateDeath.isBefore(dateBirth);
+		return retVal;
+	}
 	
 }
