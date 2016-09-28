@@ -36,6 +36,11 @@
 1 BIRT
 2 DATE 23 OCT 1964
 1 FAMS @F1@
+0 @I0001@ INDI
+1 NOTE US23 Duplicate individual based on birthdate and name
+1 NAME Brenda Louise /Turner/
+1 BIRT
+2 DATE 23 OCT 1964
 0 @I5@ INDI
 1 NAME Sarah Beth /Matson/
 1 SEX F
@@ -180,4 +185,11 @@
 2 DATE 1 APR 2008
 1 CHIL @I11@
 1 CHIL @I12@
+0 @F7@ FAM
+1 NOTE Test family with incorrect spouse genders US21
+1 NOTE Expecting 2 errors, one for each spouse
+1 HUSB @I5@
+1 WIFE @I10@
+1 MARR
+2 DATE 15 JUN 2004
 0 TRLR

@@ -333,6 +333,56 @@ public class gedcomparser {
 	}
 	
 	//********************************************************************
+	// Check unique Name/BirthDate combinations for all individuals
+	// US23
+	//********************************************************************	
+	private static void checkUniqueIndividuals(){
+		Cindiv indiv;
+		Cindiv indivForCompare;
+		ArrayList<Cindiv> duplicates = new ArrayList<Cindiv>();
+		
+		for (int i=0; i<indivContainer.getSize();i++){
+			indiv = indivContainer.getIndiv(i);
+			for(int j=0;j<indivContainer.getSize();j++){
+				indivForCompare = indivContainer.getIndiv(j);				
+				if(!indiv.getId().equals(indivForCompare.getId()) && !duplicates.contains(indiv)){
+					if(indiv.getName().equals(indivForCompare.getName()) && 
+						indiv.getDateBirth().equals(indivForCompare.getDateBirth())){						
+						String errorString = "Individual " + indiv.getId() + " " + indiv.getName() + 
+								" with birthdate " +indiv.getDateBirth()+ " is not unique in this GEDCOM file.\n"
+								+ "Duplicate individual ID is " + indivForCompare.getId() + ".";
+						duplicates.add(indivForCompare);
+						printError(true, "US23", errorString);						
+					}
+				}
+			}
+		}
+	}
+	//********************************************************************
+	// Check husband is male and wife is female
+	// US21
+	//********************************************************************	
+	private static void checkSpouseGenders(){
+		CFamily fam;
+		for (int i=0; i<familyContainer.getSize();i++){
+			fam = familyContainer.getFam(i);
+			Cindiv husb = indivContainer.findIndiv(fam.getHusbandID());
+			Cindiv wife = indivContainer.findIndiv(fam.getWifeID());
+			if(!husb.getGender().equals("M")){
+				String errorString = "Family "+ fam.getFamID()+ " husband " + husb.getName() +
+						" is not Male.";
+				printError(true, "US21", errorString);
+			}
+			if(!wife.getGender().equals("F")){
+				String errorString = "Family "+ fam.getFamID()+ " wife " + wife.getName() +
+						" is not Female.";
+				printError(true, "US21", errorString);				
+			}			
+		}
+	}
+	
+	
+	//********************************************************************
 	// Check Death Date on Individuals
 	// 
 	//********************************************************************
@@ -388,6 +438,11 @@ public class gedcomparser {
         
         // Check Dates US03
         checkDeathDate();
-          
+        
+        //Check Unique Individuals US23
+        checkUniqueIndividuals();
+        
+        //Check Spouse Genders US21
+        checkSpouseGenders();
     }
 }
