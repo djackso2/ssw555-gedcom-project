@@ -60,6 +60,20 @@ public class gedcomparser {
 	}
 	
 	//********************************************************************
+	// Print Error 
+	//   err - true for Error, false for anomaly 
+	//   US_ID - User Story ID
+	//   text- text of error/anomaly
+	//********************************************************************
+	private static void printError(Boolean err, String US_ID, String text)
+	{
+		String msg = "Error";
+		if (!err) msg = "Anomaly"; 
+		
+		System.out.printf("\n%s: %s: %s\n", msg, US_ID, text);
+			
+	}
+	//********************************************************************
 	// Print a list of Indiv from the list
 	//********************************************************************
 	private static void printIndiv()
@@ -71,7 +85,17 @@ public class gedcomparser {
 		for (int num=0; num < indivContainer.getSize(); num++)
 		{
 			indiv = indivContainer.getIndiv(num);
-			System.out.println(indiv.getId() + "\t" + indiv.getName());
+			System.out.printf("%-20s%s\n", "ID:", indiv.getId());
+			System.out.printf("%-20s%s\n", "Name", indiv.getName());
+			System.out.printf("%-20s%s\n", "Gender:", indiv.getGender());
+			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth());
+			System.out.printf("%-20s%s\n", "Alive:", indiv.getIsAlive());
+			if(!indiv.getIsAlive())
+				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath());
+			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
+			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
+			
+			System.out.println();
 		}
 	}
 	
@@ -84,30 +108,31 @@ public class gedcomparser {
 	{
     	CFamily fam;
     	
-    	System.out.println("\nList of Families");
+    	System.out.println("\nList of Families\n");
     	
 		for (int num=0; num < familyContainer.getSize(); num++)
 		{
 			fam = familyContainer.getFam(num);
-			System.out.println("\nFamily ID: " + fam.getFamID());
-			
-			System.out.println("Husband  : ID-" + indivContainer.findIndiv(fam.getHusbandID()).getId() +
-				"  \tName- " + indivContainer.findIndiv(fam.getHusbandID()).getName());
-			System.out.println("Wife     : ID-" + indivContainer.findIndiv(fam.getWifeID()).getId() +
-					"  \tName- " + indivContainer.findIndiv(fam.getWifeID()).getName());
+			System.out.printf("%-20s%s\n", "Family ID:", fam.getFamID());
+			System.out.printf("%-20s%s\n", "Date of Marriage:", fam.getDateMarried());
+			System.out.printf("%-20s%s\n", "Date of Divorce:", fam.getDateDivorced());
+			System.out.printf("%-20s%s - %s\n", "Husband:", fam.getHusbandID(), 
+					indivContainer.findIndiv(fam.getHusbandID()).getName());
+			System.out.printf("%-20s%s - %s\n", "Wife:", fam.getWifeID(), 
+					indivContainer.findIndiv(fam.getWifeID()).getName());
 			
 			// The following portion of this method prints out the children of  a family.
-			// Originally developed for Project_03 deliverable but unused.
-			//if (fam.getNumberOfChildren() > 0)
-			//{
-			//	System.out.println("Children: ");
-			//	for(int i = 0; i<fam.getNumberOfChildren(); i++){					
-			//		System.out.println("Child    : ID-" + indivContainer.findIndiv(fam.getChildID(i)).getId() +
-			//				"  \tName- " + indivContainer.findIndiv(fam.getChildID(i)).getName());															
-			//	}			
-			//}else{
-			//	System.out.println("No Children");
-			//}
+			if (fam.getNumberOfChildren() > 0)
+			{
+				String title = "Children:";
+				for(int i = 0; i < fam.getNumberOfChildren(); i++){					
+					System.out.printf("%-20s%s - %s\n", title,  fam.getChildID(i),
+							indivContainer.findIndiv(fam.getChildID(i)).getName());	
+					title = "";
+				}
+			}			
+			
+			System.out.println();
 		}
 	}
 	
@@ -193,11 +218,6 @@ public class gedcomparser {
 				tag = getTag(lineItems);
 				level = Integer.parseInt(lineItems[0]);
 			
-				// Print out the line
-				//System.out.println("\nLine  - " + line);
-				//System.out.println("Level - " + level);
-				//System.out.println("Tag   - " + tag);
-			
 				// new Invid 
 				if ((level == 0) && (tag.equals("INDI")))
 				{
@@ -237,6 +257,8 @@ public class gedcomparser {
 							break;
 						case "FAMS":
 							indiv.addToFamS(lineItems[2]);
+							break;
+						case "NOTE":
 							break;
 						default:
 							System.out.println("ERROR: Unprocessed INDI Level 1 line");
@@ -310,6 +332,74 @@ public class gedcomparser {
 		}
 	}
 	
+	//********************************************************************
+	// Check unique Name/BirthDate combinations for all individuals
+	// US23
+	//********************************************************************	
+	private static void checkUniqueIndividuals(){
+		Cindiv indiv;
+		Cindiv indivForCompare;
+		ArrayList<Cindiv> duplicates = new ArrayList<Cindiv>();
+		
+		for (int i=0; i<indivContainer.getSize();i++){
+			indiv = indivContainer.getIndiv(i);
+			for(int j=0;j<indivContainer.getSize();j++){
+				indivForCompare = indivContainer.getIndiv(j);				
+				if(!indiv.getId().equals(indivForCompare.getId()) && !duplicates.contains(indiv)){
+					if(indiv.getName().equals(indivForCompare.getName()) && 
+						indiv.getDateBirth().equals(indivForCompare.getDateBirth())){						
+						String errorString = "Individual " + indiv.getId() + " " + indiv.getName() + 
+								" with birthdate " +indiv.getDateBirth()+ " is not unique in this GEDCOM file.\n"
+								+ "Duplicate individual ID is " + indivForCompare.getId() + ".";
+						duplicates.add(indivForCompare);
+						printError(true, "US23", errorString);						
+					}
+				}
+			}
+		}
+	}
+	//********************************************************************
+	// Check husband is male and wife is female
+	// US21
+	//********************************************************************	
+	private static void checkSpouseGenders(){
+		CFamily fam;
+		for (int i=0; i<familyContainer.getSize();i++){
+			fam = familyContainer.getFam(i);
+			Cindiv husb = indivContainer.findIndiv(fam.getHusbandID());
+			Cindiv wife = indivContainer.findIndiv(fam.getWifeID());
+			if(!husb.getGender().equals("M")){
+				String errorString = "Family "+ fam.getFamID()+ " husband " + husb.getName() +
+						" is not Male.";
+				printError(true, "US21", errorString);
+			}
+			if(!wife.getGender().equals("F")){
+				String errorString = "Family "+ fam.getFamID()+ " wife " + wife.getName() +
+						" is not Female.";
+				printError(true, "US21", errorString);				
+			}			
+		}
+	}
+	
+	
+	//********************************************************************
+	// Check Death Date on Individuals
+	// 
+	//********************************************************************
+	private static void checkDeathDate()
+	{
+		Cindiv indiv;
+		
+		for (int num = 0; num < indivContainer.getSize(); num++)
+		{
+			indiv = indivContainer.getIndiv(num);
+			if (indiv.isDeathBeforeBirth()) {
+				String text = String.format("Death date (%s) of %s (%s) occurs before birth date (%s)", 
+						indiv.getDateDeath(), indiv.getName(), indiv.getId(), indiv.getDateBirth());
+				printError(true, "US03", text);
+			}
+		}
+	}
 	
 	//********************************************************************
 	//
@@ -341,6 +431,18 @@ public class gedcomparser {
             
         // Print the Families
         printFam();
-          
+        
+        // ERROR Checking
+        printError(true, "USTBD", "This is a test of an Error");
+        printError(false, "USTBD", "This is a test of an Anomaly");
+        
+        // Check Dates US03
+        checkDeathDate();
+        
+        //Check Unique Individuals US23
+        checkUniqueIndividuals();
+        
+        //Check Spouse Genders US21
+        checkSpouseGenders();
     }
 }

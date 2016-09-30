@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Cdate {
 	
-	private String sDate;
+	private String sDate = "None";
 	java.util.Calendar cal = GregorianCalendar.getInstance();
 	private static List<String>monthList = new ArrayList<String>();
 
@@ -29,30 +29,62 @@ public class Cdate {
 	}
 		
 	
-	// Will be adding other compare methods
+	// Date String can have the following formats:
+	//    [d]d MMM yyyy  (25 DEC 1944 or 1 JAN 1950)
+	//    MMM yyyy       (DEC 1944)
+	//    yyyy           (1944)
 	public void set(String date)
 	{
 		int pos = 0;
 		String del = " ";
-		String sDay, sMonth, sYear;
+		String sDay = "1", sMonth = "JAN", sYear;
+		String s1 = "", s2 = "", s3 = "";
 		int day = 0, month = 0, year = 0;
+		int cnt;
 
 		sDate = date;
 		initMonthList();
 		
-		if (((pos = date.indexOf(del)) != -1))
+		// Parse the string as 1, 2 or 3 parts
+		if (((pos = date.indexOf(del)) == -1))
 		{
-			sDay = date.substring(0, pos);
+			s1 = date;
+			cnt = 1;
+		}
+		else
+		{
+			s1 = date.substring(0, pos);
 			date = date.substring(pos + del.length());
-			day =  Integer.parseInt(sDay);
+			s2 = date;
+			cnt = 2;
 		}
 		if (((pos = date.indexOf(del)) != -1))
 		{
-			sMonth = date.substring(0, pos);
-			sYear = date.substring(pos + del.length());
-			month = monthList.indexOf(sMonth);
-			year = Integer.parseInt(sYear);
+			s2 = date.substring(0, pos);	
+			s3 = date.substring(pos + del.length());
+			cnt = 3;
+		
 		}
+		
+		if (cnt == 1)
+		{
+			sYear = s1;
+		}
+		else if (cnt == 2)
+		{
+			sYear = s2;
+			sMonth = s1;
+		}
+		else
+		{
+			sYear = s3;
+			sMonth = s2;
+			sDay = s1;
+		}
+		// Validate
+		day =  Integer.parseInt(sDay);
+		month = monthList.indexOf(sMonth);
+		year = Integer.parseInt(sYear);
 		
 		cal.set(year, month, day);
 	}
@@ -67,16 +99,23 @@ public class Cdate {
     	return sDate;
     }
 
+    // isBefore
+    //   true - if this date is before date2
     public boolean isBefore(Cdate date2)
     {
        return cal.before(date2.getCal());
     }
     
+    // isAfter
+    //   true - if this date is after date2
     public boolean isAfter(Cdate date2)
     {
        return cal.after(date2.getCal());
     }
     
+    // isWithin
+    //   true - if this date and date2 are within yrs-mnths-days
+    //   false - if they are not within yrs-mnths-days
     public boolean isWithin(Cdate date2, int yrs, int mnths, int days)
     {
     	java.util.Calendar  tmp1, tmp2;
