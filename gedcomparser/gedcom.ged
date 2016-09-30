@@ -185,9 +185,9 @@
 2 DATE 1 APR 2008
 1 CHIL @I11@
 1 CHIL @I12@
+0 NOTE Test family with incorrect spouse genders US21
+0 NOTE Expecting 2 errors, one for each spouse
 0 @F7@ FAM
-1 NOTE Test family with incorrect spouse genders US21
-1 NOTE Expecting 2 errors, one for each spouse
 1 HUSB @I5@
 1 WIFE @I10@
 1 MARR
