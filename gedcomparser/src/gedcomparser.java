@@ -66,5 +66,8 @@ public class gedcomparser {
         
         //Check Spouse Genders US21
         Functions.checkSpouseGenders(indivContainer, familyContainer);
+	
+	//Check to see if there are more than 15 kids
+	checkIfTooManyKids(){
     }
 }
