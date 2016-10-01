@@ -401,8 +401,8 @@ public class Functions {
 		for (int num = 0; num < familyContainer.getSize(); num++){
 			fam = familyContainer.getFam(num);
 			if(fam.getNumberOfChildren()>15){
-				String anom = new String("Greater than 15 children in this family. Number of children: " + 
-						fam.getNumberOfChildren());
+				String anom = new String("Greater than 15 children in this family. " 
+					+ fam.getFamID() + " Number of children: " + fam.getNumberOfChildren());
 				printError(true, "US15", anom);
 			}
 		}
