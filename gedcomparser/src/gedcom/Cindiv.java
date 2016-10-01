@@ -13,20 +13,20 @@ public class Cindiv {
 	private String id;
 	private String name;
 	private String gender;
-	private String dateBirth;
+	private Cdate dateBirth;
 	private Boolean isAlive;
-	private String dateDeath;
+	private Cdate dateDeath;
 	private String famc;  
 	private LinkedList<String> fams;
 	
 	public Cindiv(String i){
 		id = i;
 		name = "";
-		gender = "";
-		dateBirth = "";
+		gender = "None";
+		dateBirth = new Cdate();
 		isAlive = true;
-		dateDeath = "";
-		famc = "";
+		dateDeath = new Cdate();
+		famc = "None";
 		fams = new LinkedList<String>();
 	}
 	public String getId(){
@@ -45,16 +45,17 @@ public class Cindiv {
 		gender = g;
 	}	
 	public String getDateBirth(){
-		return dateBirth;
+		return dateBirth.get();
 	}	
 	public void setDateBirth(String b){
-		dateBirth = b;
+		dateBirth.set(b);
 	}	
 	public String getDateDeath(){
-		return dateDeath;
+		return dateDeath.get();
 	}
 	public void setDateDeath(String d){
-		dateDeath = d;
+		isAlive = false;
+		dateDeath.set(d);
 	}	
 	public boolean getIsAlive(){
 		return isAlive;
@@ -65,8 +66,8 @@ public class Cindiv {
 	public LinkedList<String> getFamS(){
 		return fams;
 	}
-	public void addToFamS(String ID){
-		fams.add(id);
+	public void addToFamS(String f){
+		fams.add(f);
 	}
 	public void setFamS(LinkedList<String> f){
 		fams = f;
@@ -76,6 +77,11 @@ public class Cindiv {
 	}
 	public void setFamC(String f){
 		famc = f;
+	}
+	public Boolean isDeathBeforeBirth(){
+		Boolean retVal = false;
+		if (!isAlive) retVal = dateDeath.isBefore(dateBirth);
+		return retVal;
 	}
 	
 }
