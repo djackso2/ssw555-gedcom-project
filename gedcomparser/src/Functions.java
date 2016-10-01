@@ -394,7 +394,7 @@ public class Functions {
 	// User Story 15
 	// Print anomaly if more than 15 children
 	//********************************************************************
-	private static void checkIfTooManyKids(){
+	private static void checkIfTooManyKids(FamilyContainer familyContainer){
 
 		CFamily fam;
 		
@@ -419,7 +419,7 @@ public class Functions {
 	//   US_ID - User Story ID
 	//   text- text of error/anomaly
 	//********************************************************************
-	public static void printError(Boolean err, String US_ID, String text)
+	private static void printError(Boolean err, String US_ID, String text)
 	{
 		String msg = "Error";
 		if (!err) msg = "Anomaly"; 
