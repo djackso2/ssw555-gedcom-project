@@ -320,7 +320,9 @@ public class gedcomparser {
 	}
 	// end get number of children	
 	
->>>>>>> origin/sprint1_eileen
+        // Check for too many children
+        checkIfTooManyKids();
+
 	//********************************************************************
 	//
 	// Main entry point of Application
@@ -364,5 +366,8 @@ public class gedcomparser {
         
         //Check Spouse Genders US21
         Functions.checkSpouseGenders(indivContainer, familyContainer);
+	    
+        // Check for too many children
+        Functions.checkIfTooManyKids();	    
     }
 }
