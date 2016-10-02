@@ -69,5 +69,8 @@ public class gedcomparser {
 	
 	//Check to see if there are more than 15 kids
         Functions.checkIfTooManyKids(familyContainer);
+	    
+	// Check to see if the birthdates of the siblings are too close    
+	Functions.checkIfSibsNotTooClose(IndivContainer indivContainer, FamilyContainer familyContainer);    
     }
 }
