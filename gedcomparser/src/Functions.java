@@ -326,6 +326,75 @@ public class Functions {
 		}
 	}
 	
+	//********************************************************************
+	// User Story 15
+	// Print anomaly if more than 15 children
+	//********************************************************************
+	public static void checkIfTooManyKids(FamilyContainer familyContainer){
+
+		CFamily fam;
+		
+		for (int num = 0; num < familyContainer.getSize(); num++){
+			fam = familyContainer.getFam(num);
+			if(fam.getNumberOfChildren()>15){
+				String anom = new String("Greater than 15 children in this family. " 
+					+ fam.getFamID() + " Number of children: " + fam.getNumberOfChildren());
+				printError(false, "US15", anom);
+			}
+		}
+
+	}
+	// end get number of children	
+
+	//********************************************************************
+	// User Story 13
+	// Print anomaly if more 2 children have birthdates that are more than
+	// 2 days apart but less than 8 months
+	//********************************************************************
+	
+	public static void checkIfSibsNotTooClose(IndivContainer indivContainer, 
+			FamilyContainer familyContainer){
+
+		CFamily fam;
+
+		// for each family
+		for (int num=0; num < familyContainer.getSize(); num++)
+		{
+			fam = familyContainer.getFam(num);
+			// if number of children > 1
+		    if (fam.getNumberOfChildren() > 1)
+		    {
+		    	// for each child 
+		        for(int i = 0; i < fam.getNumberOfChildren() - 1; i++)
+		        {
+		        	Cindiv child1;
+
+		            // Get child1
+		            child1 = indivContainer.findIndiv(fam.getChildID(i));
+
+		            // for each additional child
+		            for (int j = i+1; j < fam.getNumberOfChildren(); j++)
+		            {
+		            	Cindiv child2;
+		            	  
+		                // Get child2
+		                child2 = indivContainer.findIndiv(fam.getChildID(j));
+
+		                // if date is within 8 months and not within 2 days
+		                if ((child1.getBirthDate().isWithin(child2.getBirthDate(), 0, 8, 0)) &&
+		                       (!child1.getBirthDate().isWithin(child2.getBirthDate(), 0, 0, 2)))
+			            {
+		                	String anom = new String(child1.getId() + " and " + child2.getId() + " are not likely "
+		                            		+ "to be siblings in family: " + fam.getFamID());
+		                	printError(false, "US13", anom);
+		                } // if
+		            } // for j
+		        } // for i
+		    } // if children > 1
+		} //for each family
+	} // function
+	
+	
 	// Print section****************************************************************************************	
 	//********************************************************************
 	// Print a list of Indiv from the list
@@ -389,74 +458,6 @@ public class Functions {
 			System.out.println();
 		}
 	}
-	
-	//********************************************************************
-	// User Story 15
-	// Print anomaly if more than 15 children
-	//********************************************************************
-	private static void checkIfTooManyKids(FamilyContainer familyContainer){
-
-		CFamily fam;
-		
-		for (int num = 0; num < familyContainer.getSize(); num++){
-			fam = familyContainer.getFam(num);
-			if(fam.getNumberOfChildren()>15){
-				String anom = new String("Greater than 15 children in this family. " 
-					+ fam.getFamID() + " Number of children: " + fam.getNumberOfChildren());
-				printError(true, "US15", anom);
-			}
-		}
-
-	}
-	// end get number of children	
-
-		//********************************************************************
-	// User Story 13
-	// Print anomaly if more 2 children have birthdates that are more than
-	// 2 days apart but less than 8 months
-	//********************************************************************
-	
-	private static void checkIfSibsNotTooClose(IndivContainer indivContainer, 
-			FamilyContainer familyContainer){
-
-		CFamily fam;
-
-		// for each family
-		for (int num=0; num < familyContainer.getSize(); num++)
-		{
-
-		// if number of children > 1
-		     if (fam.getNumberOfChildren() > 1)
-		     {
-			// for each child 
-		           for(int i = 0; i < fam.getNumberOfChildren() - 1; i++)
-		          {
-		            Cindiv child1;
-
-		             // Get child1
-		             child1 = indivContainer.findIndiv(fam.getChildID(i));
-
-		              // for each additional child
-		              for (int j = i+1; j < fam.getNumberOfChildren(); j++)
-		              {
-		            	  Cindiv child2;
-		            	  
-		                 // Get child2
-		                   child2 = indivContainer.findIndiv(fam.getChildID(j));
-
-		                   // if date is within 8 months and not within 2 days
-		                   If ((child1.getBirthDate().isWithin(child2.getBirthDate(), 0, 8, 0)) &&
-		                       (!child1.getBirthDate().isWithin(child2.getBirthDate(), 0, 0, 2))
-			                {
-					   String anom = new String(child1 + " and " + child2 + "are not likely "
-		                            		+ "to be siblings")
-				           printError(true, "US13", anom);
-		                    } // if
-		               } // for j
-		           } // for i
-		        } // if children > 1
-		    } //for each family
-		} // function
 	
 	
 	//********************************************************************

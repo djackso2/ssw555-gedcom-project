@@ -53,10 +53,7 @@ public class gedcomparser {
         // Print the Families
         Functions.printFam(indivContainer, familyContainer);
         
-        // ERROR Checking--------------------------------------------------------------
-        Functions.printError(true, "USTBD", "This is a test of an Error");
-        Functions.printError(false, "USTBD", "This is a test of an Anomaly");
-        
+ 
         // Parsed GEDCOM tree validation section --------------------------------------
         // Check Dates US03
         Functions.checkDeathDate(indivContainer);
@@ -67,10 +64,10 @@ public class gedcomparser {
         //Check Spouse Genders US21
         Functions.checkSpouseGenders(indivContainer, familyContainer);
 	
-	//Check to see if there are more than 15 kids
+        //Check to see if there are more than 15 kids
         Functions.checkIfTooManyKids(familyContainer);
 	    
-	// Check to see if the birthdates of the siblings are too close    
-	Functions.checkIfSibsNotTooClose(IndivContainer indivContainer, FamilyContainer familyContainer);    
+        // Check to see if the birthdates of the siblings are too close    
+        Functions.checkIfSibsNotTooClose( indivContainer,  familyContainer);    
     }
 }
