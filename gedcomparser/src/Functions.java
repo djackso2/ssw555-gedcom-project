@@ -18,6 +18,18 @@ import java.util.List;
 import gedcom.*;
 
 public class Functions {
+	
+	private static IndivContainer indivContainer = new IndivContainer();
+	private static FamilyContainer familyContainer = new FamilyContainer();
+	
+	// Levels that require next level data
+	public static enum LVL0 {
+	    NONE, INDI, FAM 
+	}
+	public static enum LVL1 {
+	    NONE, BIRT, DEAT, MARR, DIV
+	}
+	
 	// Parsing section****************************************************************************************
 	//********************************************************************
 	//
@@ -25,14 +37,14 @@ public class Functions {
 	// individuals and families.
 	//
 	//********************************************************************	
-	public static void parseFile(String gedcomfile, IndivContainer indivContainer, FamilyContainer familyContainer){
+	public static void parseFile(String gedcomfile){
 		
 		FileReader fileReader;
     	Cindiv indiv = null;
     	CFamily fam = null;
     	int level;
-    	gedcomparser.LVL0 lvl0 = gedcomparser.LVL0.NONE;
-    	gedcomparser.LVL1 lvl1 = gedcomparser.LVL1.NONE;
+    	LVL0 lvl0 = LVL0.NONE;
+    	LVL1 lvl1 = LVL1.NONE;
     	List<String> p1tagList = initP1TagLists();  // set of valid tags
     	List<String> p2tagList = initP2TagLists();  // set of valid tags 	
     	
@@ -65,23 +77,23 @@ public class Functions {
 				if ((level == 0) && (tag.equals("INDI")))
 				{
 					indiv = indivContainer.addIndiv(lineItems[1]);
-					lvl0 = gedcomparser.LVL0.INDI;
+					lvl0 = LVL0.INDI;
 				}
 				//  new Family 
 				else if ((level == 0) && (tag.equals("FAM")))
 				{
 					fam = familyContainer.addFam(lineItems[1]);
-					lvl0 = gedcomparser.LVL0.FAM; 
+					lvl0 = LVL0.FAM; 
 				}
 				// other level 0 tags
 				else if (level == 0)
 				{
-					lvl0 = gedcomparser.LVL0.NONE; 
+					lvl0 = LVL0.NONE; 
 				}
 				// Process Indiv level-1
-				else if ((level == 1) && (lvl0 == gedcomparser.LVL0.INDI))
+				else if ((level == 1) && (lvl0 == LVL0.INDI))
 				{
-					lvl1 = gedcomparser.LVL1.NONE;
+					lvl1 = LVL1.NONE;
 					switch (tag) {
 						case "NAME":
 							indiv.setName(lineItems[2]);
@@ -90,10 +102,10 @@ public class Functions {
 							indiv.setGender(lineItems[2]);
 							break;
 						case "BIRT":
-							lvl1 = gedcomparser.LVL1.BIRT;
+							lvl1 = LVL1.BIRT;
 							break;
 						case "DEAT":
-							lvl1 = gedcomparser.LVL1.DEAT;
+							lvl1 = LVL1.DEAT;
 							break;
 						case "FAMC":
 							indiv.setFamC(lineItems[2]);
@@ -108,12 +120,12 @@ public class Functions {
 					}		
 				}
 				// Process Family level-1
-				else if ((level == 1) && (lvl0 == gedcomparser.LVL0.FAM))
+				else if ((level == 1) && (lvl0 == LVL0.FAM))
 				{
-					lvl1 = gedcomparser.LVL1.NONE;
+					lvl1 = LVL1.NONE;
 					switch (tag) {
 						case "MARR":
-							lvl1 = gedcomparser.LVL1.MARR;
+							lvl1 = LVL1.MARR;
 							break;
 						case "HUSB":
 							fam.setHusbandID(lineItems[2]);
@@ -125,7 +137,7 @@ public class Functions {
 							fam.addChild(lineItems[2]);
 							break;
 						case "DIV":
-							lvl1 = gedcomparser.LVL1.DIV;
+							lvl1 = LVL1.DIV;
 							break;
 						default:
 							System.out.println("ERROR: Unprocessed FAM Level 1 line");
@@ -134,31 +146,31 @@ public class Functions {
 				// other level 1 tags
 				else if (level == 1)
 				{
-					lvl1 = gedcomparser.LVL1.NONE; 
+					lvl1 = LVL1.NONE; 
 				}
 				// Process level-2
 				else if ((level == 2) && (tag.equals("DATE")))
 				{
-					if ((lvl0 == gedcomparser.LVL0.INDI) && (lvl1 == gedcomparser.LVL1.BIRT))
+					if ((lvl0 == LVL0.INDI) && (lvl1 == LVL1.BIRT))
 					{
 						indiv.setDateBirth(lineItems[2]);
 					}
-					else if ((lvl0 == gedcomparser.LVL0.INDI) && (lvl1 == gedcomparser.LVL1.DEAT))
+					else if ((lvl0 == LVL0.INDI) && (lvl1 == LVL1.DEAT))
 					{
 						indiv.setDateDeath(lineItems[2]);
 					}
-					else if ((lvl0 == gedcomparser.LVL0.FAM) && (lvl1 == gedcomparser.LVL1.MARR))
+					else if ((lvl0 == LVL0.FAM) && (lvl1 == LVL1.MARR))
 					{
 						fam.setDateMarried(lineItems[2]);
 					}
-					else if ((lvl0 == gedcomparser.LVL0.FAM) && (lvl1 == gedcomparser.LVL1.DIV))
+					else if ((lvl0 == LVL0.FAM) && (lvl1 == LVL1.DIV))
 					{
 						fam.setDateDivorced(lineItems[2]);
 					}
 				}
 				else
 				{
-					lvl1 = gedcomparser.LVL1.NONE; 
+					lvl1 = LVL1.NONE; 
 				}	 
 				
 				
@@ -260,7 +272,7 @@ public class Functions {
 	// Check unique Name/BirthDate combinations for all individuals
 	// US23
 	//********************************************************************	
-	public static void checkUniqueIndividuals(IndivContainer indivContainer){
+	public static void checkUniqueIndividuals(){
 		Cindiv indiv;
 		Cindiv indivForCompare;
 		ArrayList<Cindiv> duplicates = new ArrayList<Cindiv>();
@@ -288,7 +300,7 @@ public class Functions {
 	// Check husband is male and wife is female
 	// US21
 	//********************************************************************	
-	public static void checkSpouseGenders(IndivContainer indivContainer, FamilyContainer familyContainer){
+	public static void checkSpouseGenders(){
 		CFamily fam;
 		for (int i=0; i<familyContainer.getSize();i++){
 			fam = familyContainer.getFam(i);
@@ -311,7 +323,7 @@ public class Functions {
 	// Check Death Date on Individuals
 	// 
 	//********************************************************************
-	public static void checkDeathDate(IndivContainer indivContainer)
+	public static void checkDeathDate()
 	{
 		Cindiv indiv;
 		
@@ -330,7 +342,7 @@ public class Functions {
 	// User Story 15
 	// Print anomaly if more than 15 children
 	//********************************************************************
-	public static void checkIfTooManyKids(FamilyContainer familyContainer){
+	public static void checkIfTooManyKids(){
 
 		CFamily fam;
 		
@@ -352,8 +364,7 @@ public class Functions {
 	// 2 days apart but less than 8 months
 	//********************************************************************
 	
-	public static void checkIfSibsNotTooClose(IndivContainer indivContainer, 
-			FamilyContainer familyContainer){
+	public static void checkIfSibsNotTooClose(){
 
 		CFamily fam;
 
@@ -395,11 +406,27 @@ public class Functions {
 	} // function
 	
 	
+	//********************************************************************
+	// User Story 13
+	// Print anomaly if more 2 children have birthdates that are more than
+	// 2 days apart but less than 8 months
+	//********************************************************************
+	
+	public static void isDescendantOf(String parentId, String childId){
+	
+		CFamily fam;
+		Cindiv parent;
+		
+		// parent = indivContainer.findIndiv(parentId);
+		
+		
+	}
+	
 	// Print section****************************************************************************************	
 	//********************************************************************
 	// Print a list of Indiv from the list
 	//********************************************************************
-	public static void printIndiv(IndivContainer indivContainer)
+	public static void printIndiv()
 	{
 		Cindiv indiv;
     
@@ -427,7 +454,7 @@ public class Functions {
 	// Assumption: familyContainer is populated
 	// Assumption: indivContainer is populated
 	//********************************************************************
-	public static void printFam(IndivContainer indivContainer, FamilyContainer familyContainer)
+	public static void printFam()
 	{
     	CFamily fam;
     	
