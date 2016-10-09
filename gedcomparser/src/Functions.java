@@ -412,14 +412,36 @@ public class Functions {
 	// 2 days apart but less than 8 months
 	//********************************************************************
 	
-	public static void isDescendantOf(String parentId, String childId){
+	public static Boolean isDescendantOf(String parentId, String descId){
 	
 		CFamily fam;
 		Cindiv parent;
+		String childId;
+		Boolean isADesc = false;
 		
-		// parent = indivContainer.findIndiv(parentId);
+		parent = indivContainer.findIndiv(parentId);
+		if (parent == null) return isADesc;
 		
-		
+		// for each family the parent is a spouse 
+		for (int famIndx = 0; (famIndx < parent.getFamS().size()) && !isADesc; famIndx++)
+		{
+			fam = familyContainer.findFam(parent.getFamS().get(famIndx));
+			// for each child in the family
+			for (int childIndx = 0; (childIndx < fam.getNumberOfChildren()) && !isADesc; childIndx++)
+			{
+				childId = fam.getChildID(childIndx);
+				if (childId.equals(descId))
+				{
+					isADesc = true;
+				}
+				else
+				{
+					isADesc = isDescendantOf(childId, descId);
+				}
+			}
+		}
+	
+		return isADesc;
 	}
 	
 	// Print section****************************************************************************************	
