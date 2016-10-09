@@ -42,12 +42,14 @@
 1 BIRT
 2 DATE 23 OCT 1964
 0 @I5@ INDI
+1 NOTE US17 Married as a descendant
 1 NAME Sarah Beth /Matson/
 1 SEX F
 1 BIRT
 2 DATE 15 APR 1986
 1 FAMS @F5@
 1 FAMS @F6@
+1 FAMS @F9@
 1 FAMC @F1@
 0 @I6@ INDI
 1 NAME Kelsey Marie /Matson/
@@ -111,6 +113,7 @@
 1 FAMC @F2@
 0 @I16@ INDI
 1 NOTE US41 Date year
+1 NOTE US17 Married descendant
 1 NAME Hiski /Matson/
 1 SEX M
 1 BIRT
@@ -118,6 +121,7 @@
 1 DEAT
 2 DATE 7 NOV 1982
 1 FAMS @F4@
+1 FAMS @F9@
 0 @I17@ INDI
 1 NOTE US41 Date year
 1 NAME Eunice Jane /Proffit/
@@ -326,4 +330,9 @@
 1 CHIL @I114@
 1 CHIL @I115@
 1 CHIL @I116@
+0 @F9@ FAM
+1 HUSB @I16@
+1 WIFE @I5@
+1 MARR
+2 DATE 15 JUN 1948
 0 TRLR

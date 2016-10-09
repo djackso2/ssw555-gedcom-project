@@ -407,11 +407,8 @@ public class Functions {
 	
 	
 	//********************************************************************
-	// User Story 13
-	// Print anomaly if more 2 children have birthdates that are more than
-	// 2 days apart but less than 8 months
+	// Recursive routine to check if a person is a descendant of another
 	//********************************************************************
-	
 	public static Boolean isDescendantOf(String parentId, String descId){
 	
 		CFamily fam;
@@ -442,6 +439,35 @@ public class Functions {
 		}
 	
 		return isADesc;
+	}
+	
+	//********************************************************************
+	// User Story 17
+	// Print error if a person is married to a descendant
+	//********************************************************************
+	public static void checkForMarDescendants(){
+		
+		CFamily fam;
+		
+		// for each family
+		for (int num=0; num < familyContainer.getSize(); num++)
+		{
+			fam = familyContainer.getFam(num);
+			if (isDescendantOf(fam.getHusbandID(), fam.getWifeID()))
+			{
+				String err = new String("In the family (" + fam.getFamID() + "), the wife (" + fam.getWifeID() + 
+						") is a descendant of the husband (" + fam.getHusbandID() + ")");
+                	
+				printError(true, "US17", err);
+			}
+			if (isDescendantOf(fam.getWifeID(), fam.getHusbandID()))
+			{
+				String err = new String("In the family (" + fam.getFamID() + "), the husband (" + fam.getHusbandID() + 
+						") is a descendant of the wife (" + fam.getWifeID() + ")");
+                	
+				printError(true, "US17", err);
+			}
+		}
 	}
 	
 	// Print section****************************************************************************************	

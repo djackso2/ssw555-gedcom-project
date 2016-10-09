@@ -53,5 +53,8 @@ public class gedcomparser {
 	    
         // Check to see if the birthdates of the siblings are too close    
         Functions.checkIfSibsNotTooClose();    
+        
+        // US17 check for married descendants
+        Functions.checkForMarDescendants();
     }
 }
