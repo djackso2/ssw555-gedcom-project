@@ -7,31 +7,15 @@
 // SSW-555  September 2016
 //
 
-import gedcom.IndivContainer;
-import gedcom.FamilyContainer;
 
 public class gedcomparser {
 	
-	private static IndivContainer indivContainer;
-	private static FamilyContainer familyContainer;
-	
-	// Levels that require next level data
-	public static enum LVL0 {
-	    NONE, INDI, FAM 
-	}
-	public static enum LVL1 {
-	    NONE, BIRT, DEAT, MARR, DIV
-	}
-
 	//********************************************************************
 	//
 	// Main entry point of Application
 	//
 	//********************************************************************
     public static void main(String[] args) {
-   
-    	indivContainer = new IndivContainer();
-    	familyContainer = new FamilyContainer();
     	    	
         // Verify file name is passed
         if (args.length == 0)
@@ -44,27 +28,33 @@ public class gedcomparser {
         System.out.println("File: " + gedcomfile);
                 
         // Open and parse the file
-        Functions.parseFile(gedcomfile, indivContainer, familyContainer);
+        Functions.parseFile(gedcomfile);
        
         // Print section---------------------------------------------------------------
         // Print the Individuals
-        Functions.printIndiv(indivContainer);
+        Functions.printIndiv();
             
         // Print the Families
-        Functions.printFam(indivContainer, familyContainer);
+        Functions.printFam();
         
-        // ERROR Checking--------------------------------------------------------------
-        Functions.printError(true, "USTBD", "This is a test of an Error");
-        Functions.printError(false, "USTBD", "This is a test of an Anomaly");
-        
+ 
         // Parsed GEDCOM tree validation section --------------------------------------
         // Check Dates US03
-        Functions.checkDeathDate(indivContainer);
+        Functions.checkDeathDate();
         
         //Check Unique Individuals US23
-        Functions.checkUniqueIndividuals(indivContainer);
+        Functions.checkUniqueIndividuals();
         
         //Check Spouse Genders US21
-        Functions.checkSpouseGenders(indivContainer, familyContainer);
+        Functions.checkSpouseGenders();
+	
+        //Check to see if there are more than 15 kids
+        Functions.checkIfTooManyKids();
+	    
+        // Check to see if the birthdates of the siblings are too close    
+        Functions.checkIfSibsNotTooClose();    
+        
+        // US17 check for married descendants
+        Functions.checkForMarDescendants();
     }
 }

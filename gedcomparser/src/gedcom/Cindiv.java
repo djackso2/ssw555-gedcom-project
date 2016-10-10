@@ -47,6 +47,9 @@ public class Cindiv {
 	public String getDateBirth(){
 		return dateBirth.get();
 	}	
+	public Cdate getBirthDate(){
+		return dateBirth;
+	}
 	public void setDateBirth(String b){
 		dateBirth.set(b);
 	}	

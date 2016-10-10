@@ -14,6 +14,15 @@ public class FamilyContainer extends GedcomContainer<CFamily> {
 	   return( myList.get(indx));
 	}
 	
+	public CFamily findFam(String id){
+		for (int i = 0; i <  myList.size(); i++){
+			if (myList.get(i).getFamID().equals(id)){
+				return myList.get(i);
+			}
+		}
+		return null;
+	}
+	
 	public CFamily addFam(String id)
 	{
 		int indx;
