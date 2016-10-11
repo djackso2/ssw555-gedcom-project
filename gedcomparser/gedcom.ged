@@ -42,12 +42,14 @@
 1 BIRT
 2 DATE 23 OCT 1964
 0 @I5@ INDI
+1 NOTE US17 Married as a descendant
 1 NAME Sarah Beth /Matson/
 1 SEX F
 1 BIRT
 2 DATE 15 APR 1986
 1 FAMS @F5@
 1 FAMS @F6@
+1 FAMS @F9@
 1 FAMC @F1@
 0 @I6@ INDI
 1 NAME Kelsey Marie /Matson/
@@ -111,6 +113,7 @@
 1 FAMC @F2@
 0 @I16@ INDI
 1 NOTE US41 Date year
+1 NOTE US17 Married descendant
 1 NAME Hiski /Matson/
 1 SEX M
 1 BIRT
@@ -118,6 +121,7 @@
 1 DEAT
 2 DATE 7 NOV 1982
 1 FAMS @F4@
+1 FAMS @F9@
 0 @I17@ INDI
 1 NOTE US41 Date year
 1 NAME Eunice Jane /Proffit/
@@ -141,6 +145,119 @@
 1 BIRT
 2 DATE MAR 1947
 1 FAMC @F4@
+0 NOTE The following individuals are used for US testing
+0 @I100@ INDI
+1 NAME Hubby /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1930
+1 FAMS @F8@
+0 @I99@ INDI
+1 NAME Honey /Hope/
+1 SEX F
+1 BIRT
+2 DATE 27 MAR 1930
+1 FAMS @F8@
+0 @I101@ INDI
+1 NAME chid1 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1950
+1 FAMC @F8@
+0 NOTE child2 and child3 are twins 1 day apart
+0 @I102@ INDI
+1 NAME chid2 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1951
+1 FAMC @F8@
+0 @I103@ INDI
+1 NAME chid3 /Test/
+1 SEX M
+1 BIRT
+2 DATE 27 MAR 1951
+1 FAMC @F8@
+0 NOTE (US13) child4 and child5 are 5 months apart 
+0 @I104@ INDI
+1 NAME chid4 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1952
+1 FAMC @F8@
+0 @I105@ INDI
+1 NAME chid5 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 AUG 1952
+1 FAMC @F8@
+0 NOTE childs 6-10 born on same day
+0 @I106@ INDI
+1 NAME chid6 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1954
+1 FAMC @F8@
+0 @I107@ INDI
+1 NAME chid7 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1954
+1 FAMC @F8@
+0 @I108@ INDI
+1 NAME chid8 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1954
+1 FAMC @F8@
+0 @I109@ INDI
+1 NAME chid9 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1954
+1 FAMC @F8@
+0 @I110@ INDI
+1 NAME chid10 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1954
+1 FAMC @F8@
+0 @I111@ INDI
+1 NAME chid11 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1955
+1 FAMC @F8@
+0 @I112@ INDI
+1 NAME chid12 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1956
+1 FAMC @F8@
+0 @I113@ INDI
+1 NAME chid13 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1957
+1 FAMC @F8@
+0 @I114@ INDI
+1 NAME chid14 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1958
+1 FAMC @F8@
+0 NOTE Child15 and child16 are 8 months apart
+0 @I115@ INDI
+1 NAME chid15 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1959
+1 FAMC @F8@
+0 @I116@ INDI
+1 NAME chid16 /Test/
+1 SEX M
+1 BIRT
+2 DATE 26 NOV 1959
+1 FAMC @F8@
 0 @F1@ FAM
 1 HUSB @I1@
 1 WIFE @I4@
@@ -185,11 +302,37 @@
 2 DATE 1 APR 2008
 1 CHIL @I11@
 1 CHIL @I12@
+0 NOTE Test family with incorrect spouse genders US21
+0 NOTE Expecting 2 errors, one for each spouse
 0 @F7@ FAM
-1 NOTE Test family with incorrect spouse genders US21
-1 NOTE Expecting 2 errors, one for each spouse
 1 HUSB @I5@
 1 WIFE @I10@
 1 MARR
 2 DATE 15 JUN 2004
+0 @F8@ FAM
+1 HUSB @I100@
+1 WIFE @I99@
+1 MARR
+2 DATE 15 JUN 1948
+1 CHIL @I101@
+1 CHIL @I102@
+1 CHIL @I103@
+1 CHIL @I104@
+1 CHIL @I105@
+1 CHIL @I106@
+1 CHIL @I107@
+1 CHIL @I108@
+1 CHIL @I109@
+1 CHIL @I110@
+1 CHIL @I111@
+1 CHIL @I112@
+1 CHIL @I113@
+1 CHIL @I114@
+1 CHIL @I115@
+1 CHIL @I116@
+0 @F9@ FAM
+1 HUSB @I16@
+1 WIFE @I5@
+1 MARR
+2 DATE 15 JUN 1948
 0 TRLR
