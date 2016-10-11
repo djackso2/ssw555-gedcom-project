@@ -271,6 +271,9 @@ public class Functions {
 	//********************************************************************
 	// Check unique Name/BirthDate combinations for all individuals
 	// US23
+	// Include family in the error message if the duplicate individuals 
+	// are both listed as children in the same family
+	// US25
 	//********************************************************************	
 	public static void checkUniqueIndividuals(){
 		Cindiv indiv;
@@ -288,13 +291,17 @@ public class Functions {
 								" with birthdate " +indiv.getDateBirth()+ " is not unique in this GEDCOM file.\n"
 								+ "Duplicate individual ID is " + indivForCompare.getId() + ".";
 						duplicates.add(indivForCompare);
+						if((indiv.getFamC().equals(indivForCompare.getFamC()))&&!indiv.getFamC().equals("None")){
+							errorString += "\nDuplicate individuals are also children of the same family. FamID: " +
+									indiv.getFamC();
+						}
+						
 						printError(true, "US23", errorString);						
 					}
 				}
 			}
 		}
 	}
-	
 	
 	//********************************************************************
 	// Check husband is male and wife is female
