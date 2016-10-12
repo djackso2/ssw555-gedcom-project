@@ -19,8 +19,8 @@ import gedcom.*;
 
 public class Functions {
 	
-	private static IndivContainer indivContainer = new IndivContainer();
-	private static FamilyContainer familyContainer = new FamilyContainer();
+	private static IndivContainer indivContainer;
+	private static FamilyContainer familyContainer;
 	
 	// Levels that require next level data
 	public static enum LVL0 {
@@ -38,6 +38,9 @@ public class Functions {
 	//
 	//********************************************************************	
 	public static void parseFile(String gedcomfile){
+		// Clearing containers before parsing so parseFile can be re-called for test
+		indivContainer = new IndivContainer();
+		familyContainer = new FamilyContainer();
 		
 		FileReader fileReader;
     	Cindiv indiv = null;
@@ -271,7 +274,7 @@ public class Functions {
 	//********************************************************************
 	// Check unique Name/BirthDate combinations for all individuals
 	// US23
-	// Include family in the error message if the duplicate individuals 
+	// Include second error and family ID if the duplicate individuals 
 	// are both listed as children in the same family
 	// US25
 	//********************************************************************	
@@ -280,27 +283,38 @@ public class Functions {
 		Cindiv indivForCompare;
 		ArrayList<Cindiv> duplicates = new ArrayList<Cindiv>();
 		
-		for (int i=0; i<indivContainer.getSize();i++){
+		for (int i=0; i<indivContainer.getSize()-1;i++){
 			indiv = indivContainer.getIndiv(i);
-			for(int j=0;j<indivContainer.getSize();j++){
+			for(int j=(i+1);j<indivContainer.getSize();j++){
 				indivForCompare = indivContainer.getIndiv(j);				
 				if(!indiv.getId().equals(indivForCompare.getId()) && !duplicates.contains(indiv)){
-					if(indiv.getName().equals(indivForCompare.getName()) && 
-						indiv.getDateBirth().equals(indivForCompare.getDateBirth())){						
+			
+					if(isSameNameBDate(indiv, indivForCompare)){						
 						String errorString = "Individual " + indiv.getId() + " " + indiv.getName() + 
 								" with birthdate " +indiv.getDateBirth()+ " is not unique in this GEDCOM file.\n"
 								+ "Duplicate individual ID is " + indivForCompare.getId() + ".";
 						duplicates.add(indivForCompare);
-						if((indiv.getFamC().equals(indivForCompare.getFamC()))&&!indiv.getFamC().equals("None")){
-							errorString += "\nDuplicate individuals are also children of the same family. FamID: " +
-									indiv.getFamC();
-						}
+				
+						printError(true, "US23", errorString);
 						
-						printError(true, "US23", errorString);						
-					}
+						if((indiv.getFamC().equals(indivForCompare.getFamC()))&&!indiv.getFamC().equals("None")){
+							errorString = "Duplicate individuals are also children of the same family.\n"
+									+ "Family ID in which individuals are duplicates is " + indiv.getFamC();
+							
+							printError(true,"US25", errorString);
+						}			
+					}			
 				}
 			}
 		}
+	}
+	
+	//********************************************************************
+	// Helper to reduce multi-line conditionals when searching for
+	// duplicate individuals
+	//********************************************************************	
+	public static boolean isSameNameBDate(Cindiv i1, Cindiv i2){
+		return i1.getName().equals(i2.getName()) && (i1.getDateBirth().equals(i2.getDateBirth()));
 	}
 	
 	//********************************************************************
@@ -555,5 +569,5 @@ public class Functions {
 		
 		System.out.printf("\n%s: %s: %s\n", msg, US_ID, text);
 			
-	}	
+	}
 }

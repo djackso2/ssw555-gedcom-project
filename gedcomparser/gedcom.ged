@@ -57,6 +57,14 @@
 1 BIRT
 2 DATE 26 JUL 1993
 1 FAMC @F1@
+0 NOTE US25 Duplicate individual and in same family as duplicate
+0 NOTE Expecting errors for both US23 and US25
+0 @I006@ INDI
+1 NAME Kelsey Marie /Matson/
+1 SEX F
+1 BIRT
+2 DATE 26 JUL 1993
+1 FAMC @F1@
 0 @I7@ INDI
 1 NAME Kaitlyn Ann /Matson/
 1 SEX F
