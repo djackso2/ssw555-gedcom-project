@@ -79,4 +79,27 @@ public class Cdate_test {
 		assertEquals(true, dt.isWithin(dt2, 5, 0, 0));
 	}
 	
+	@Test
+	public void test_Annevsaries() {
+		Cdate today = new Cdate();
+		Cdate event = new Cdate();
+		
+		event.set("31 DEC 1962");
+		today.set("1 DEC 2016");
+		assertEquals(true, event.anniversaryIsWithin(today, 30));
+		assertEquals(false, event.anniversaryIsWithin(today, 29));
+		
+		today.set("15 DEC 2016");
+		assertEquals(true, event.anniversaryIsWithin(today, 30));
+		
+		today.set("31 DEC 2016");
+		assertEquals(true, event.anniversaryIsWithin(today, 30));
+		
+		event.set("2 JAN 1962");
+		today.set("5 DEC 2016");
+		assertEquals(true, event.anniversaryIsWithin(today, 30));
+		
+		today.set("5 JAN 2016");
+		assertEquals(false, event.anniversaryIsWithin(today, 30));
+	}
 }

@@ -31,7 +31,10 @@ public class CFamily{
 	}		
 	public String getDateMarried(){
 		return dateMarried.get();
-	}		
+	}
+	public Cdate getMarriedDate(){
+		return dateMarried;
+	}
 	public void setDateMarried(String m){
 		dateMarried.set(m);
 	}		

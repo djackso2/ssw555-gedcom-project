@@ -37,7 +37,9 @@ public class gedcomparser {
         // Print the Families
         Functions.printFam();
         
- 
+        // US39 check for upcoming anniversaries
+        Functions.checkForUpcomingAnniversaries();
+        
         // Parsed GEDCOM tree validation section --------------------------------------
         // Check Dates US03
         Functions.checkDeathDate();

@@ -135,4 +135,27 @@ public class Cdate {
     	
     	return tmp1.after(tmp2);
     }
+    
+    // anniversaryIsWithin
+    //   true - if the yearly anniversary is within the number of days
+    //   false - if they are not within yrs-mnths-days
+    public boolean anniversaryIsWithin(Cdate today, int days)
+    {
+    	java.util.Calendar date;
+    	java.util.Calendar event = GregorianCalendar.getInstance();
+    	int day, month, year;
+    
+    	date = (Calendar) today.getCal().clone();
+    
+    	day = cal.get(Calendar.DATE);
+		month = cal.get(Calendar.MONTH);
+		year = date.get(Calendar.YEAR);
+    	
+    	event.set(year, month, day);
+    	
+    	if (event.before(date)) event.add(Calendar.YEAR, 1);
+    	date.add(Calendar.DATE, days+1);
+    	
+    	return (event.before(date));
+    }
 }

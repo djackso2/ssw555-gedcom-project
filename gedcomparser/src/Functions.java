@@ -12,6 +12,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -469,6 +471,37 @@ public class Functions {
 			}
 		}
 	}
+	
+	//********************************************************************
+	// User Story 39
+	// Print error if a person is married to a descendant
+	//********************************************************************
+		public static void checkForUpcomingAnniversaries(){
+			
+			CFamily fam;
+			int count = 0;
+			Cdate today = new Cdate();
+			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			
+			System.out.print("\n(US39) The following married couples celebrate wedding anniversaries within the next 30 days from today ");
+			System.out.println(dateFormat.format(today.getCal().getTime()) + ":");
+			
+			// for each family
+			for (int num=0; num < familyContainer.getSize(); num++)
+			{
+				fam = familyContainer.getFam(num);
+				if ((fam.getMarriedDate().anniversaryIsWithin(today, 30)) &&
+						indivContainer.findIndiv(fam.getHusbandID()).getIsAlive() &&
+						indivContainer.findIndiv(fam.getWifeID()).getIsAlive())
+				{
+					System.out.print("     " + indivContainer.findIndiv(fam.getHusbandID()).getName());
+					System.out.print(" and " + indivContainer.findIndiv(fam.getWifeID()).getName());
+					System.out.println(" married " + fam.getDateMarried());
+					count++;
+				}
+			}
+			if (count == 0) System.out.println("None");
+		}
 	
 	// Print section****************************************************************************************	
 	//********************************************************************
