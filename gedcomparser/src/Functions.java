@@ -524,6 +524,42 @@ public class Functions {
 			if (count == 0) System.out.println("None");
 		}
 	
+			//********************************************************************
+		//   
+		//   Marriage should occur before death
+		//   US_ID  05
+		//   
+		//********************************************************************
+		public static void checkMarriageBeforeDeath()
+		{
+			for (int num=0; num<familyContainer.getSize(); num++)
+			{
+				CFamily fam = familyContainer.getFam(num); // get the family
+				Cindiv husb = indivContainer.findIndiv(fam.getHusbandID());
+				Cindiv wife = indivContainer.findIndiv(fam.getWifeID());
+				
+				if(!husb.getIsAlive() || !wife.getIsAlive())
+				{
+					if(husb.getDateDeath().isBefore(fam.getMarriedDate()))
+					{
+		            	String anom = new String("Husband ID " + husb.getId() + " date of death " 
+					    + husb.getDateDeath().getStringDate() + " is before marriage date "
+		                + fam.getDateMarried() + "for family " + fam.getFamID());
+		            	printError(true, "US05", anom);
+					}		
+					if(wife.getDateDeath().isBefore(fam.getMarriedDate()))
+					{
+		            	String anom = new String("Wife ID " + wife.getId() + " date of death " 
+					    + wife.getDateDeath().getStringDate() + " is before marriage date "
+		                + fam.getDateMarried() + "for family " + fam.getFamID());
+		            	printError(true, "US05", anom);				
+					}
+				}
+			}// for loop
+			
+		 }// end marriageBeforeDeath
+	
+	
 	// Print section****************************************************************************************	
 	//********************************************************************
 	// Print a list of Indiv from the list
