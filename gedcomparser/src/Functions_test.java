@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -59,4 +60,27 @@ public class Functions_test {
 		assertTrue(!Functions.isSameNameBDate(ti1, ti3));
 		assertTrue(!Functions.isSameNameBDate(ti2, ti3));		
 	}
+
+	@Test
+	public void test_FindRecentDied(){
+		Functions.parseFile("gedcomUS37.ged");
+		ArrayList<Cindiv> dead = Functions.findRecentDied();
+		assertEquals(dead.size(), 1);
+		assertEquals(dead.get(0).getId(), "@I3@");
+	}
+	
+	@Test
+	public void test_FindDescOfRecDied(){
+		Functions.parseFile("gedcomUS37.ged");
+		
+		String testString = "\n" + 
+				"Anomaly: US37: Recently deceased individual @I3@ has the following descendants:\n" + 
+				"@I4@\n" + 
+				"@I5@\n";
+		
+		final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(myOut));				
+		Functions.listSurvivors();		
+		assertEquals(testString,myOut.toString());			
+	}		
 }

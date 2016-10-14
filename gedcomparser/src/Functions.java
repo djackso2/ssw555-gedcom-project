@@ -641,4 +641,50 @@ public class Functions {
 		System.out.printf("\n%s: %s: %s\n", msg, US_ID, text);
 			
 	}
+	
+	// MISC **************************************************************
+	//********************************************************************
+	// Print descendants and spouses of those who've died in the last 30 
+	// days. NOTE: this currently prints as an anomaly.
+	// US37
+	//********************************************************************	
+	public static void listSurvivors(){
+		ArrayList<Cindiv> died = findRecentDied();
+		ArrayList<Cindiv> descendants = new ArrayList<Cindiv>();
+
+		for(int i = 0; i<died.size(); i++){
+			for(int j = 0; j<indivContainer.getSize(); j++){
+				if(isDescendantOf(died.get(i).getId(), indivContainer.getIndiv(j).getId())){
+					descendants.add(indivContainer.getIndiv(j));
+				}
+			}
+			
+			if(descendants.size()>0){
+				String errorString = "Recently deceased individual "+died.get(i).getId()+" has the following descendants:\n";
+				for(int j = 0; j<descendants.size(); j++){
+					errorString += descendants.get(j).getId();
+					if(j<descendants.size()-1){
+						errorString += "\n";
+					}
+				}				
+			
+				printError(false, "US37", errorString);		
+			}			
+		}		
+	}
+
+	//********************************************************************
+	// @returns ArrayList of individuals who've died in last 30 days
+	//********************************************************************	
+	public static ArrayList<Cindiv> findRecentDied(){
+		Cdate today = new Cdate();
+		ArrayList<Cindiv> dec = new ArrayList<Cindiv>();
+		
+		for(int i = 0; i<indivContainer.getSize(); i++){		
+			if(!indivContainer.getIndiv(i).getIsAlive() && indivContainer.getIndiv(i).getDateDeath().isWithin(today, 0, 0, 30)){
+				dec.add(indivContainer.getIndiv(i));
+			}
+		}		
+		return dec;
+	}	
 }

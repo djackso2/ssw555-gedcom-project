@@ -166,6 +166,6 @@ public class Cdate {
 	//********************************************************
     public String getStringDate(){
 		DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
-    	return (dateFormat.format(getCal().getTime()) + ":").toUpperCase();
+    	return (dateFormat.format(getCal().getTime())).toUpperCase();
     }
 }

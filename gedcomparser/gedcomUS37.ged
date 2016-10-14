@@ -1,0 +1,26 @@
+0 HEAD
+1 NOTE Gedcom file created specifically for JUnit testing of US37
+0 @I3@ INDI
+1 NAME Jane Doe
+1 SEX F
+1 BIRT
+2 DATE 23 OCT 1964
+1 DEAT
+2 DATE 13 OCT 2016
+1 FAMS @F1@
+0 @I4@ INDI
+1 NAME Jenny Doe
+1 SEX F
+1 FAMC @F1@
+0 @I5@ INDI
+1 NAME Josie Doe
+1 SEX F
+1 FAMC @F1@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I3@
+1 MARR
+2 DATE 8 NOV 1985
+1 CHIL @I4@
+1 CHIL @I5@
+0 TRLR
