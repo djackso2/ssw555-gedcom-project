@@ -1,5 +1,7 @@
 
 package gedcom;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -157,5 +159,13 @@ public class Cdate {
     	date.add(Calendar.DATE, days+1);
     	
     	return (event.before(date));
+    }
+	
+        //********************************************************
+	// added for US05
+	//********************************************************
+    public String getStringDate(){
+		DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+    	return (dateFormat.format(getCal().getTime()) + ":").toUpperCase();
     }
 }
