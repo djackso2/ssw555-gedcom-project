@@ -291,7 +291,7 @@ public class Functions {
 			
 					if(isSameNameBDate(indiv, indivForCompare)){						
 						String errorString = "Individual " + indiv.getId() + " " + indiv.getName() + 
-								" with birthdate " +indiv.getDateBirth()+ " is not unique in this GEDCOM file.\n"
+								" with birthdate " + indiv.getDateBirth().getStringDate() + " is not unique in this GEDCOM file.\n"
 								+ "Duplicate individual ID is " + indivForCompare.getId() + ".";
 						duplicates.add(indivForCompare);
 				
@@ -314,9 +314,10 @@ public class Functions {
 	// duplicate individuals
 	//********************************************************************	
 	public static boolean isSameNameBDate(Cindiv i1, Cindiv i2){
-		return i1.getName().equals(i2.getName()) && (i1.getDateBirth().equals(i2.getDateBirth()));
+		return i1.getName().equals(i2.getName()) && (i1.getDateBirth().getStringDate().equals(
+				i2.getDateBirth().getStringDate()));
 	}
-	
+
 	//********************************************************************
 	// Check husband is male and wife is female
 	// US21
@@ -353,7 +354,7 @@ public class Functions {
 			indiv = indivContainer.getIndiv(num);
 			if (indiv.isDeathBeforeBirth()) {
 				String text = String.format("Death date (%s) of %s (%s) occurs before birth date (%s)", 
-						indiv.getDateDeath(), indiv.getName(), indiv.getId(), indiv.getDateBirth());
+						indiv.getDateDeath().getStringDate(), indiv.getName(), indiv.getId(), indiv.getDateBirth().getStringDate());
 				printError(true, "US03", text);
 			}
 		}
@@ -413,8 +414,8 @@ public class Functions {
 		                child2 = indivContainer.findIndiv(fam.getChildID(j));
 
 		                // if date is within 8 months and not within 2 days
-		                if ((child1.getBirthDate().isWithin(child2.getBirthDate(), 0, 8, 0)) &&
-		                       (!child1.getBirthDate().isWithin(child2.getBirthDate(), 0, 0, 2)))
+		                if ((child1.getDateBirth().isWithin(child2.getDateBirth(), 0, 8, 0)) &&
+		                       (!child1.getDateBirth().isWithin(child2.getDateBirth(), 0, 0, 2)))
 			            {
 		                	String anom = new String(child1.getId() + " and " + child2.getId() + " are not likely "
 		                            		+ "to be siblings in family: " + fam.getFamID());
@@ -507,10 +508,10 @@ public class Functions {
 			System.out.printf("%-20s%s\n", "ID:", indiv.getId());
 			System.out.printf("%-20s%s\n", "Name", indiv.getName());
 			System.out.printf("%-20s%s\n", "Gender:", indiv.getGender());
-			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth());
+			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth().getStringDate());
 			System.out.printf("%-20s%s\n", "Alive:", indiv.getIsAlive());
 			if(!indiv.getIsAlive())
-				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath());
+				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().getStringDate());
 			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
 			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
 			
@@ -549,8 +550,7 @@ public class Functions {
 							indivContainer.findIndiv(fam.getChildID(i)).getName());	
 					title = "";
 				}
-			}			
-			
+			}						
 			System.out.println();
 		}
 	}
@@ -570,4 +570,51 @@ public class Functions {
 		System.out.printf("\n%s: %s: %s\n", msg, US_ID, text);
 			
 	}
+	
+	// MISC **************************************************************
+	//********************************************************************
+	// Print descendants and spouses of those who've died in the last 30 
+	// days. NOTE: this currently prints as an anomaly.
+	// US37
+	//********************************************************************	
+	public static void listSurvivors(){
+		ArrayList<Cindiv> died = findRecentDied();
+		ArrayList<Cindiv> descendants = new ArrayList<Cindiv>();
+
+		for(int i = 0; i<died.size(); i++){
+			for(int j = 0; j<indivContainer.getSize(); j++){
+				if(isDescendantOf(died.get(i).getId(), indivContainer.getIndiv(j).getId())){
+					descendants.add(indivContainer.getIndiv(j));
+				}
+			}
+			
+			if(descendants.size()>0){
+				String errorString = "Recently deceased individual "+died.get(i).getId()+" has the following descendants:\n";
+				for(int j = 0; j<descendants.size(); j++){
+					errorString += descendants.get(j).getId();
+					if(j<descendants.size()-1){
+						errorString += "\n";
+					}
+				}				
+			
+				printError(false, "US37", errorString);		
+			}			
+		}		
+	}
+
+	//********************************************************************
+	// @returns ArrayList of individuals who've died in last 30 days
+	//********************************************************************	
+	public static ArrayList<Cindiv> findRecentDied(){
+		Cdate today = new Cdate();
+		ArrayList<Cindiv> dec = new ArrayList<Cindiv>();
+		
+		for(int i = 0; i<indivContainer.getSize(); i++){		
+			if(!indivContainer.getIndiv(i).getIsAlive() && indivContainer.getIndiv(i).getDateDeath().isWithin(today, 0, 0, 30)){
+				dec.add(indivContainer.getIndiv(i));
+			}
+		}		
+		return dec;
+	}
+	
 }

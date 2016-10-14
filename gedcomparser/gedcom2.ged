@@ -1,10 +1,5 @@
 0 HEAD
-1 NOTE Stephen Matson
-1 NOTE 5 September 2016
-1 NOTE GEDCOM file selected for Team-DES Project
-1 NOTE Github repo: https://github.com/djackso2/ssw555-gedcom-project.git
-1 NOTE This gedcom file has an "invalid tag" (FILE)
-1 FILE InvalidTag
+1 NOTE Gedcom file created specifically for JUnit testing of US23
 0 @I3@ INDI
 1 NAME Brenda Louise /Turner/
 1 SEX F

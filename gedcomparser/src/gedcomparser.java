@@ -56,5 +56,8 @@ public class gedcomparser {
         
         // US17 check for married descendants
         Functions.checkForMarDescendants();
+        
+        //US37 print descendants of recently deceased
+        Functions.listSurvivors();
     }
 }

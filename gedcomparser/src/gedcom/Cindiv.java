@@ -44,18 +44,16 @@ public class Cindiv {
 	public void setGender(String g){
 		gender = g;
 	}	
-	public String getDateBirth(){
-		return dateBirth.get();
-	}	
-	public Cdate getBirthDate(){
+	public Cdate getDateBirth(){
 		return dateBirth;
-	}
+	}	
 	public void setDateBirth(String b){
 		dateBirth.set(b);
 	}	
-	public String getDateDeath(){
-		return dateDeath.get();
+	public Cdate getDateDeath(){
+		return dateDeath;
 	}
+	
 	public void setDateDeath(String d){
 		isAlive = false;
 		dateDeath.set(d);
