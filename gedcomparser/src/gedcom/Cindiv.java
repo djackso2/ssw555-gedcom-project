@@ -53,8 +53,8 @@ public class Cindiv {
 	public void setDateBirth(String b){
 		dateBirth.set(b);
 	}	
-	public String getDateDeath(){
-		return dateDeath.get();
+	public Cdate getDateDeath(){
+		return dateDeath;
 	}
 	public void setDateDeath(String d){
 		isAlive = false;
