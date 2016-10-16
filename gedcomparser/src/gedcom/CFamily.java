@@ -1,6 +1,7 @@
 package gedcom;
 
 import java.util.LinkedList;
+import java.util.Set;
 
 //Dan Jackson
 //SSW555 
@@ -15,6 +16,7 @@ public class CFamily{
 	private LinkedList<String> childrenIDs;
 	private Cdate dateMarried; //String for now, can be changed
 	private Cdate dateDivorced; //String for now, can be changed
+	private Boolean isDivorced;
 	
 	public CFamily(String fID) {
 		famID = fID;
@@ -23,6 +25,7 @@ public class CFamily{
 		husbandID = "None";
 		dateMarried = new Cdate();
 		dateDivorced = new Cdate();
+		isDivorced = false;
 	}
 	
 	//General info getters and setters
@@ -42,8 +45,18 @@ public class CFamily{
 		return dateDivorced.get();
 	}	
 	public void setDateDivorced(String d){
+		isDivorced = true;
 		dateDivorced.set(d);
 	}	
+	public Boolean isDivorced()
+	{
+	   return isDivorced;
+	}
+
+	public Cdate getDivorcedDate()
+	{
+	   return dateDivorced;
+	}
 	public String getWifeID(){
 		return wifeID;
 	}	
