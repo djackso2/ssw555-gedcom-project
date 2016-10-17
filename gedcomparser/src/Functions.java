@@ -298,7 +298,7 @@ public class Functions {
 			
 					if(isSameNameBDate(indiv, indivForCompare)){						
 						String errorString = "Individual " + indiv.getId() + " " + indiv.getName() + 
-								" with birthdate " +indiv.getDateBirth()+ " is not unique in this GEDCOM file.\n"
+								" with birthdate " +indiv.getDateBirth().getStringDate()+ " is not unique in this GEDCOM file.\n"
 								+ "Duplicate individual ID is " + indivForCompare.getId() + ".";
 						duplicates.add(indivForCompare);
 				
@@ -321,7 +321,7 @@ public class Functions {
 	// duplicate individuals
 	//********************************************************************	
 	public static boolean isSameNameBDate(Cindiv i1, Cindiv i2){
-		return i1.getName().equals(i2.getName()) && (i1.getDateBirth().equals(i2.getDateBirth()));
+		return i1.getName().equals(i2.getName()) && (i1.getDateBirth().getStringDate().equals(i2.getDateBirth().getStringDate()));
 	}
 	
 	//********************************************************************
@@ -360,7 +360,7 @@ public class Functions {
 			indiv = indivContainer.getIndiv(num);
 			if (indiv.isDeathBeforeBirth()) {
 				String text = String.format("Death date (%s) of %s (%s) occurs before birth date (%s)", 
-						indiv.getDateDeath(), indiv.getName(), indiv.getId(), indiv.getDateBirth());
+						indiv.getDateDeath().getStringDate(), indiv.getName(), indiv.getId(), indiv.getDateBirth().getStringDate());
 				printError(true, "US03", text);
 			}
 		}
@@ -549,14 +549,14 @@ public class Functions {
 					{
 		            	String anom = new String("Husband ID " + husb.getId() + " date of death " 
 					    + husb.getDateDeath().getStringDate() + " is before marriage date "
-		                + fam.getDateMarried() + "for family " + fam.getFamID());
+		                + fam.getDateMarried() + " for family " + fam.getFamID());
 		            	printError(true, "US05", anom);
 					}		
 					if(wife.getDateDeath().isBefore(fam.getMarriedDate()))
 					{
 		            	String anom = new String("Wife ID " + wife.getId() + " date of death " 
 					    + wife.getDateDeath().getStringDate() + " is before marriage date "
-		                + fam.getDateMarried() + "for family " + fam.getFamID());
+		                + fam.getDateMarried() + " for family " + fam.getFamID());
 		            	printError(true, "US05", anom);				
 					}
 				}
@@ -629,10 +629,10 @@ public class Functions {
 			System.out.printf("%-20s%s\n", "ID:", indiv.getId());
 			System.out.printf("%-20s%s\n", "Name", indiv.getName());
 			System.out.printf("%-20s%s\n", "Gender:", indiv.getGender());
-			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth());
+			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth().getStringDate());
 			System.out.printf("%-20s%s\n", "Alive:", indiv.getIsAlive());
 			if(!indiv.getIsAlive())
-				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath());
+				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().getStringDate());
 			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
 			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
 			
@@ -692,4 +692,50 @@ public class Functions {
 		System.out.printf("\n%s: %s: %s\n", msg, US_ID, text);
 			
 	}
+	
+	// MISC **************************************************************
+	//********************************************************************
+	// Print descendants and spouses of those who've died in the last 30 
+	// days. NOTE: this currently prints as an anomaly.
+	// US37
+	//********************************************************************	
+	public static void listSurvivors(){
+		ArrayList<Cindiv> died = findRecentDied();
+		ArrayList<Cindiv> descendants = new ArrayList<Cindiv>();
+
+		for(int i = 0; i<died.size(); i++){
+			for(int j = 0; j<indivContainer.getSize(); j++){
+				if(isDescendantOf(died.get(i).getId(), indivContainer.getIndiv(j).getId())){
+					descendants.add(indivContainer.getIndiv(j));
+				}
+			}
+			
+			if(descendants.size()>0){
+				String errorString = "Recently deceased individual "+died.get(i).getId()+" has the following descendants:\n";
+				for(int j = 0; j<descendants.size(); j++){
+					errorString += descendants.get(j).getId();
+					if(j<descendants.size()-1){
+						errorString += "\n";
+					}
+				}				
+			
+				printError(false, "US37", errorString);		
+			}			
+		}		
+	}
+
+	//********************************************************************
+	// @returns ArrayList of individuals who've died in last 30 days
+	//********************************************************************	
+	public static ArrayList<Cindiv> findRecentDied(){
+		Cdate today = new Cdate();
+		ArrayList<Cindiv> dec = new ArrayList<Cindiv>();
+		
+		for(int i = 0; i<indivContainer.getSize(); i++){		
+			if(!indivContainer.getIndiv(i).getIsAlive() && indivContainer.getIndiv(i).getDateDeath().isWithin(today, 0, 0, 30)){
+				dec.add(indivContainer.getIndiv(i));
+			}
+		}		
+		return dec;
+	}	
 }
