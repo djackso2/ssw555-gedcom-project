@@ -61,6 +61,7 @@ public class Functions_test {
 		assertTrue(!Functions.isSameNameBDate(ti2, ti3));		
 	}
 
+/*
 	@Test
 	public void test_FindRecentDied(){
 		Functions.parseFile("gedcomUS37.ged");
@@ -83,4 +84,5 @@ public class Functions_test {
 		Functions.listSurvivors();		
 		assertEquals(testString,myOut.toString());			
 	}		
+*/
 }

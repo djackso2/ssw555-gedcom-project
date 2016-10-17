@@ -1,4 +1,3 @@
-package gedcom;
 
 // Class is a collection of functions to parse, print, and validate/error check
 // a GEDCOM file.
@@ -11,6 +10,12 @@ package gedcom;
 // 
 // SSW-555  September 2016
 //
+import gedcom.CFamily;
+import gedcom.Cdate;
+import gedcom.Cindiv;
+import gedcom.FamilyContainer;
+import gedcom.IndivContainer;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -415,8 +420,8 @@ public class Functions {
 		                child2 = indivContainer.findIndiv(fam.getChildID(j));
 
 		                // if date is within 8 months and not within 2 days
-		                if ((child1.getBirthDate().isWithin(child2.getBirthDate(), 0, 8, 0)) &&
-		                       (!child1.getBirthDate().isWithin(child2.getBirthDate(), 0, 0, 2)))
+		                if ((child1.getDateBirth().isWithin(child2.getDateBirth(), 0, 8, 0)) &&
+		                       (!child1.getDateBirth().isWithin(child2.getDateBirth(), 0, 0, 2)))
 			            {
 		                	String anom = new String(child1.getId() + " and " + child2.getId() + " are not likely "
 		                            		+ "to be siblings in family: " + fam.getFamID());

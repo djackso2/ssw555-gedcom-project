@@ -61,5 +61,8 @@ public class gedcomparser {
 	    
         //US05 check to see if date of death is before date of marriage
         Functions.checkMarriageBeforeDeath();
+        
+        //US11 check to see if there are issues with married dates
+        Functions.checkForBigamy();
     }
 }
