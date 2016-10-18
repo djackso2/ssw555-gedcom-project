@@ -71,18 +71,18 @@ public class Functions_test {
 	}
 	
 	@Test
-	public void test_FindDescOfRecDied(){
+	public void test_NumDescendants(){
 		Functions.parseFile("gedcomUS37.ged");
+		ArrayList<Cindiv> descendants;
 		
-		String testString = "\n" + 
-				"Anomaly: US37: Recently deceased individual @I3@ has the following descendants:\n" + 
-				"@I4@\n" + 
-				"@I5@\n";
-		
+		//Redirecting output to keep from outputting to console during test
 		final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(myOut));				
-		Functions.listSurvivors();		
-		assertEquals(testString,myOut.toString());			
+		
+		descendants = Functions.listSurvivors();		
+		assertEquals(descendants.size(),2);		
+		assertEquals(descendants.get(0).getId(),"@I4@");
+		assertEquals(descendants.get(1).getId(),"@I5@");
 	}		
 
 }

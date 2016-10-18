@@ -37,6 +37,9 @@ public class gedcomparser {
         // Print the Families
         Functions.printFam();
         
+        // US37 show descendants of recently deceased
+        Functions.listSurvivors();     
+        
         // US39 check for upcoming anniversaries
         Functions.checkForUpcomingAnniversaries();
         

@@ -721,10 +721,11 @@ public class Functions {
 	// MISC **************************************************************
 	//********************************************************************
 	// Print descendants and spouses of those who've died in the last 30 
-	// days. NOTE: this currently prints as an anomaly.
+	// days. 
+	// NOTE: returns list of descendants for testing only
 	// US37
 	//********************************************************************	
-	public static void listSurvivors(){
+	public static ArrayList<Cindiv> listSurvivors(){
 		ArrayList<Cindiv> died = findRecentDied();
 		ArrayList<Cindiv> descendants = new ArrayList<Cindiv>();
 
@@ -736,17 +737,19 @@ public class Functions {
 			}
 			
 			if(descendants.size()>0){
-				String errorString = "Recently deceased individual "+died.get(i).getId()+" has the following descendants:\n";
+				String msg = "\n(US37) Recently deceased individual "+died.get(i).getId()+" has the following descendants:\n";
 				for(int j = 0; j<descendants.size(); j++){
-					errorString += descendants.get(j).getId();
+					msg += descendants.get(j).getId();
 					if(j<descendants.size()-1){
-						errorString += "\n";
+						msg += "\n";
 					}
 				}				
 			
-				printError(false, "US37", errorString);		
+				System.out.println(msg);		
 			}			
-		}		
+			
+		}	
+		return descendants;
 	}
 
 	//********************************************************************
