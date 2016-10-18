@@ -629,17 +629,15 @@ public class Functions {
 			System.out.printf("%-20s%s\n", "ID:", indiv.getId());
 			System.out.printf("%-20s%s\n", "Name", indiv.getName());
 			System.out.printf("%-20s%s\n", "Gender:", indiv.getGender());
-<<<<<<< HEAD
 			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth().get());
 			System.out.printf("%-20s%s\n", "Alive:", indiv.getIsAlive());
 			if(!indiv.getIsAlive())
 				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().get());
-=======
 			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth().getStringDate());
 			System.out.printf("%-20s%s\n", "Alive:", indiv.getIsAlive());
 			if(!indiv.getIsAlive())
 				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().getStringDate());
->>>>>>> origin/master
+
 			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
 			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
 			
