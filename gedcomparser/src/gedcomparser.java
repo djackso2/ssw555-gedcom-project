@@ -40,6 +40,9 @@ public class gedcomparser {
         // US39 check for upcoming anniversaries
         Functions.checkForUpcomingAnniversaries();
         
+        // US41 show date short formats
+        Functions.showShortDates();
+        
         // Parsed GEDCOM tree validation section --------------------------------------
         // Check Dates US03
         Functions.checkDeathDate();

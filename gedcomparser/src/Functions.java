@@ -629,10 +629,10 @@ public class Functions {
 			System.out.printf("%-20s%s\n", "ID:", indiv.getId());
 			System.out.printf("%-20s%s\n", "Name", indiv.getName());
 			System.out.printf("%-20s%s\n", "Gender:", indiv.getGender());
-			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth());
+			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth().get());
 			System.out.printf("%-20s%s\n", "Alive:", indiv.getIsAlive());
 			if(!indiv.getIsAlive())
-				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath());
+				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().get());
 			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
 			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
 			
@@ -677,6 +677,26 @@ public class Functions {
 		}
 	}
 	
+	//********************************************************************
+	// Print US41 
+	//   Prints out short date formats
+	//********************************************************************
+	public static void showShortDates()
+	{ 	
+		System.out.println("\n(US41) The following are short date formats in the Gedcom file:");
+		
+		Cindiv indiv;
+		
+		for (int num=0; num < indivContainer.getSize(); num++)
+		{
+			indiv = indivContainer.getIndiv(num);
+			if (indiv.getDateBirth().dateRes().equals("year") ||
+					indiv.getDateBirth().dateRes().equals("month"))
+			{
+			   System.out.println("ID: " + indiv.getId() + " DOB: " + indiv.getDateBirth().get());
+			}
+		}
+	}
 	
 	//********************************************************************
 	// Print Error 

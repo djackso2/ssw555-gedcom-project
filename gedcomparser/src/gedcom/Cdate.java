@@ -11,6 +11,7 @@ import java.util.List;
 public class Cdate {
 	
 	private String sDate = "None";
+	private String dateRes = "None";
 	java.util.Calendar cal = GregorianCalendar.getInstance();
 	private static List<String>monthList = new ArrayList<String>();
 
@@ -71,17 +72,20 @@ public class Cdate {
 		if (cnt == 1)
 		{
 			sYear = s1;
+			dateRes = "year";
 		}
 		else if (cnt == 2)
 		{
 			sYear = s2;
 			sMonth = s1;
+			dateRes = "month";
 		}
 		else
 		{
 			sYear = s3;
 			sMonth = s2;
 			sDay = s1;
+			dateRes = "day";
 		}
 		// Validate
 		day =  Integer.parseInt(sDay);
@@ -99,6 +103,11 @@ public class Cdate {
     public String get()
     {
     	return sDate;
+    }
+    
+    public String dateRes()
+    {
+    	return dateRes;
     }
 
     // isBefore
