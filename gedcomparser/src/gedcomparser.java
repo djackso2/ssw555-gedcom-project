@@ -47,8 +47,8 @@ public class gedcomparser {
         Functions.showShortDates();
         
         // Parsed GEDCOM tree validation section --------------------------------------
-        // Check Dates US03
-        Functions.checkDeathDate();
+        // Check Individual Events
+        Functions.checkIndivEvents();
         
         //Check Unique Individuals US23
         Functions.checkUniqueIndividuals();
@@ -66,7 +66,7 @@ public class gedcomparser {
         Functions.checkForMarDescendants();
 	    
         //US05 check to see if date of death is before date of marriage
-        Functions.checkMarriageBeforeDeath();
+        Functions.checkEventsBeforeDeath();
         
         //US11 check to see if there are issues with married dates
         Functions.checkForBigamy();

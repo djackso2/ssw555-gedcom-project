@@ -348,12 +348,15 @@ public class Functions {
 	}	
 	
 	//********************************************************************
-	// Check Death Date on Individuals
+	// Check Indiv Events
+	//    US03 - Check Death Date on Individuals
+	//    US08 - Birth before marriage of parents
 	// 
 	//********************************************************************
-	public static void checkDeathDate()
+	public static void checkIndivEvents()
 	{
 		Cindiv indiv;
+		CFamily fam;
 		
 		for (int num = 0; num < indivContainer.getSize(); num++)
 		{
@@ -363,6 +366,13 @@ public class Functions {
 						indiv.getDateDeath().getStringDate(), indiv.getName(), indiv.getId(), indiv.getDateBirth().getStringDate());
 				printError(true, "US03", text);
 			}
+			fam =  familyContainer.findFam(indiv.getFamC());
+			if ((fam != null) && (indiv.getDateBirth().isBefore(fam.getMarriedDate()))) {
+				String anomStr = String.format("Birth date (%s) of %s (%s) occurs before parents marriage date (%s)", 
+						indiv.getDateBirth().getStringDate(), indiv.getName(), indiv.getId(), fam.getMarriedDate().getStringDate());
+				printError(false, "US08", anomStr);
+			}
+			
 		}
 	}
 	
@@ -533,9 +543,12 @@ public class Functions {
 		//   
 		//   Marriage should occur before death
 		//   US_ID  05
+		//
+		//   Divorce should occur before death
+		//   US_ID  06
 		//   
 		//********************************************************************
-		public static void checkMarriageBeforeDeath()
+		public static void checkEventsBeforeDeath()
 		{
 			for (int num=0; num<familyContainer.getSize(); num++)
 			{
@@ -543,22 +556,33 @@ public class Functions {
 				Cindiv husb = indivContainer.findIndiv(fam.getHusbandID());
 				Cindiv wife = indivContainer.findIndiv(fam.getWifeID());
 				
-				if(!husb.getIsAlive() || !wife.getIsAlive())
+				if (!husb.getIsAlive() && husb.getDateDeath().isBefore(fam.getMarriedDate()))
 				{
-					if(husb.getDateDeath().isBefore(fam.getMarriedDate()))
-					{
-		            	String anom = new String("Husband ID " + husb.getId() + " date of death " 
-					    + husb.getDateDeath().getStringDate() + " is before marriage date "
-		                + fam.getDateMarried() + " for family " + fam.getFamID());
-		            	printError(true, "US05", anom);
-					}		
-					if(wife.getDateDeath().isBefore(fam.getMarriedDate()))
-					{
-		            	String anom = new String("Wife ID " + wife.getId() + " date of death " 
-					    + wife.getDateDeath().getStringDate() + " is before marriage date "
-		                + fam.getDateMarried() + " for family " + fam.getFamID());
-		            	printError(true, "US05", anom);				
-					}
+		           	String errStr = new String("Husband ID " + husb.getId() + " date of death " 
+				    + husb.getDateDeath().getStringDate() + " is before marriage date "
+		            + fam.getDateMarried() + " for family " + fam.getFamID());
+		           	printError(true, "US05", errStr);
+				}		
+				if (!wife.getIsAlive() && wife.getDateDeath().isBefore(fam.getMarriedDate()))
+				{
+		           	String errStr = new String("Wife ID " + wife.getId() + " date of death " 
+				    + wife.getDateDeath().getStringDate() + " is before marriage date "
+		            + fam.getDateMarried() + " for family " + fam.getFamID());
+		          	printError(true, "US05", errStr);				
+				}
+				if (!husb.getIsAlive() && fam.isDivorced() && husb.getDateDeath().isBefore(fam.getDivorcedDate()))
+				{
+		           	String errStr = new String("Husband ID " + husb.getId() + " date of death " 
+				    + husb.getDateDeath().getStringDate() + " is before divorce date "
+		            + fam.getDateDivorced() + " for family " + fam.getFamID());
+		           	printError(true, "US06", errStr);
+				}		
+				if (!wife.getIsAlive() && fam.isDivorced() && wife.getDateDeath().isBefore(fam.getDivorcedDate()))
+				{
+		           	String errStr = new String("Wife ID " + wife.getId() + " date of death " 
+				    + wife.getDateDeath().getStringDate() + " is before divorce date "
+		            + fam.getDateDivorced() + " for family " + fam.getFamID());
+		           	printError(true, "US06", errStr);				
 				}
 			}// for loop
 			
@@ -633,10 +657,6 @@ public class Functions {
 			System.out.printf("%-20s%s\n", "Alive:", indiv.getIsAlive());
 			if(!indiv.getIsAlive())
 				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().get());
-			System.out.printf("%-20s%s\n", "Date of Birth:", indiv.getDateBirth().getStringDate());
-			System.out.printf("%-20s%s\n", "Alive:", indiv.getIsAlive());
-			if(!indiv.getIsAlive())
-				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().getStringDate());
 
 			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
 			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
