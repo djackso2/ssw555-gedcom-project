@@ -297,12 +297,12 @@
 1 CHIL @I5@
 1 CHIL @I6@
 1 CHIL @I7@
+0 NOTE US06 Divorce after death
 0 @F2@ FAM
 1 HUSB @I2@
 1 WIFE @I3@
 1 MARR
 2 DATE 18 JUN 1960
-1 NOTE US06 Divorce after death
 1 DIV
 2 DATE 1 JAN 1996
 1 CHIL @I1@

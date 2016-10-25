@@ -84,5 +84,20 @@ public class Functions_test {
 		assertEquals(descendants.get(0).getId(),"@I4@");
 		assertEquals(descendants.get(1).getId(),"@I5@");
 	}		
+	
+	@Test
+	public void test_CheckMaxAge(){
+		Functions.parseFile("gedcom2.ged");
+		
+		final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(myOut));		
+		
+		Functions.checkMaxAge();
+		
+		String testString = "\n" + 
+				"Error: US07: Individual @I5@ is over 150 years old. Age is 156.43 years.\n";
+		
+		assertEquals(myOut.toString(), testString);	
+	}
 
 }

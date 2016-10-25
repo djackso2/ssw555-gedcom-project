@@ -70,5 +70,8 @@ public class gedcomparser {
         
         //US11 check to see if there are issues with married dates
         Functions.checkForBigamy();
+        
+        //US07 check to make sure no one is older than 150
+        Functions.checkMaxAge();
     }
 }

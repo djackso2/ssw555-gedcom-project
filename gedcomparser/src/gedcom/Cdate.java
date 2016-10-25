@@ -1,6 +1,7 @@
 
 package gedcom;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -178,4 +179,11 @@ public class Cdate {
     	return (dateFormat.format(getCal().getTime())).toUpperCase();
     }
 
+    //********************************************************
+	// Helper to compare the difference in years between
+    // two Dates
+	//********************************************************
+    public double getYearDif(Cdate date){    	
+    	return (Math.abs(date.getCal().getTimeInMillis()-cal.getTimeInMillis())/(24 * 60 * 60 * 1000 * 364.25));
+    }
 }

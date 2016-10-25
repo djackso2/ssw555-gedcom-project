@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -633,8 +634,23 @@ public class Functions {
 					
 		}// end of checkForBigamy
 				
-				
-				
+	//********************************************************************
+	// Print error if ny individual is over 150 years old (alive or dead)
+	// US07
+	//********************************************************************				
+	public static void checkMaxAge(){
+		Cindiv indiv;
+		
+		for (int i = 0; i < indivContainer.getSize(); i++){
+			indiv = indivContainer.getIndiv(i);
+			double age = indiv.getDateBirth().getYearDif(indiv.getDateDeath());
+			
+			if(!(age < 150)){
+				printError(true, "US07", "Individual " +indiv.getId() + " is over 150 years old. Age is " 
+						+ new DecimalFormat("#.##").format(age) + " years.");			
+			}			
+		}
+	}
 				
 	
 	// Print section****************************************************************************************	

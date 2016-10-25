@@ -2,6 +2,8 @@ package gedcom;
 
 import static org.junit.Assert.*;
 
+import java.text.DecimalFormat;
+
 import org.junit.Test;
 
 public class Cdate_test {
@@ -101,5 +103,15 @@ public class Cdate_test {
 		
 		today.set("5 JAN 2016");
 		assertEquals(false, event.anniversaryIsWithin(today, 30));
+	}
+	
+	@Test
+	public void test_YearDif(){
+		Cdate today = new Cdate();
+		Cdate event = new Cdate();
+		
+		event.set("31 DEC 1962");
+		today.set("1 DEC 2016");
+		assertEquals(true, new DecimalFormat("#.##").format(today.getYearDif(event)).equals("54.07"));
 	}
 }
