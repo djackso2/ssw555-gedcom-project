@@ -175,7 +175,15 @@ public class Cdate {
 	// added for US05
 	//********************************************************
     public String getStringDate(){
-		DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+		DateFormat dateFormat;
+    	if(dateRes.equals("day")){
+    		dateFormat = new SimpleDateFormat("dd MMM yyyy");
+		}else if(dateRes.equals("month")){
+			dateFormat = new SimpleDateFormat("MMM yyyy");
+		}else{
+			dateFormat = new SimpleDateFormat("yyyy");
+		}
+    	
     	return (dateFormat.format(getCal().getTime())).toUpperCase();
     }
 
