@@ -73,5 +73,8 @@ public class gedcomparser {
         
         //US07 check to make sure no one is older than 150
         Functions.checkMaxAge();
+    
+        //US26 check for corresponding family entries
+        Functions.checkCorFamTags();
     }
 }

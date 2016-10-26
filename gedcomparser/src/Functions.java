@@ -651,7 +651,89 @@ public class Functions {
 			}			
 		}
 	}
+		
+	//********************************************************************
+	// Check that all individuals with family tags have corresponding
+	// entries in those indicated families.
+	// US26
+	//********************************************************************			
+	public static void checkCorFamTags(){
+
+		Cindiv indiv;
+		CFamily family;
+		String errorString;
+		boolean flag;				
+		
+		for(int fIndex = 0; fIndex < familyContainer.getSize(); fIndex++){					//iterate through families
+			family = familyContainer.getFam(fIndex);			
+			
+			// Check a family's children for corresponding FamC tags
+			for(int fMemIndex = 0; fMemIndex < family.getNumberOfChildren(); fMemIndex++){ 	//iterate through children
+				indiv = indivContainer.findIndiv(family.getChildID(fMemIndex)); 			//get child with that index
+				if(!(indiv.getFamC().equals(family.getFamID()))){							//if not same fam, error
+					printError(true, "US26", "Individual " + indiv.getId() + " is indicated as a child of family "
+							+ family.getFamID() + " in the family record but does not list the correct family ID.");
+				}
+			}
+			// Check a family's spouses for corresponding FamS tags
+			indiv = indivContainer.findIndiv(family.getHusbandID());						//husband
+			if(!(indiv.getFamS().contains(family.getFamID()))){							//if not same fam, error				
+				printError(true, "US26", "Individual " + indiv.getId() + " is indicated as the husband of family "
+						+ family.getFamID() + " in the family record but does not list the correct family ID.");
+			}			
+			indiv = indivContainer.findIndiv(family.getWifeID());							//wife
+			if(!(indiv.getFamS().contains(family.getFamID()))){							//if not same fam, error
+				printError(true, "US26", "Individual " + indiv.getId() + " is indicated as the wife of family "
+						+ family.getFamID() + " in the family record but does not list the correct family ID.");
+			}					
+		}						
+		
+		// check corresponding tags from individual's perspective
+		for(int i = 0; i < indivContainer.getSize(); i++){
+			indiv = indivContainer.getIndiv(i);
+			// check individual's child relationship
+			if(!(indiv.getFamC().equals("None"))){
+				flag = false;
+				family = familyContainer.findFam(indiv.getFamC());			
+				for (int j = 0; j< family.getNumberOfChildren(); j++){
+					if (family.getChildID(j).equals(indiv.getId())){						
+						flag = true;
+					}					
+				}
+				if(!flag){
+					printError(true,"US26","Individual "+indiv.getId()+" is indicated as a child of family "+
+							family.getFamID() + " but that family has no record of that individual as a child." );
+				}
+			}
+			
+			//check individual's spouse relationship
+			for (int j = 0; j < indiv.getFamS().size(); j++){
+				flag = false;
 				
+				family = familyContainer.findFam(indiv.getFamS().get(j));
+				
+				Cindiv husband = indivContainer.findIndiv(family.getHusbandID());
+				Cindiv wife = indivContainer.findIndiv(family.getWifeID());
+				
+				for(int famInd = 0; famInd < husband.getFamS().size(); famInd++){
+					if((husband.getFamS().get(famInd).equals(family.getFamID()))){
+						flag = true;
+					}
+				}
+				for(int famInd = 0; famInd < wife.getFamS().size(); famInd++){					
+					if((wife.getFamS().get(famInd).equals(family.getFamID()))){
+						flag = true;
+					}
+				}
+				if(!flag){
+					printError(true,"US26","Individual "+indiv.getId()+" is indicated as a spouse in family "+
+						family.getFamID() + " but that family has no record of that individual as a spouse." );
+				}
+			}					
+		}	
+	}
+	
+	
 	
 	// Print section****************************************************************************************	
 	//********************************************************************
