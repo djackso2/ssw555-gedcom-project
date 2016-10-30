@@ -678,7 +678,7 @@ public class Functions {
 	                    
 	                if (fam.getDivorcedDate().isAfter(today))
 	                {
-	                    String errDivorce = new String ("individual " + indiv.getId() + " date of death " + fam.getDivorcedDate() + " is after today");
+	                    String errDivorce = new String ("individual " + indiv.getId() + " date of divorce " + fam.getDivorcedDate().getStringDate() + " is after today");
 	                    printError(true, "US01", errDivorce);
 	                }//end of check of divorce date                    
 	            }	 // end family loop           
