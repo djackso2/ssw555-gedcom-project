@@ -95,7 +95,7 @@ public class Functions_test {
 		Functions.checkMaxAge();
 		
 		String testString = "\n" + 
-				"Error: US07: Individual @I5@ is over 150 years old. Age is 156.43 years.\n";
+				"Error: US07: Individual @I5@ is over 150 years old. Age is 156.44 years.\n";
 		
 		assertEquals(myOut.toString(), testString);	
 	}
