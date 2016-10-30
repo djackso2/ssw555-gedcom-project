@@ -650,7 +650,6 @@ public class Functions {
 	    {
 	        indiv = indivContainer.getIndiv(num);
 	        
-
 	        // Check birthdate here 
 			if (indiv.getDateBirth().isAfter(today)){
 				String errBirth = new String ("Individual " + indiv.getId() + "date of birth is after today");
@@ -660,36 +659,31 @@ public class Functions {
 			// check date of death
 			if (indiv.getDateDeath().isAfter(today)){
 				String errDeath = new String ("Individual " + indiv.getId() + "date of death is after today");
-				 printError(true,"US01",errDeath );
+				printError(true,"US01",errDeath );
 			}// end check death date
-
 
 	        if (indiv.getFamS().size() > 1)
 	        {
-	             for (int famx=0; famx < (indiv.getFamS().size()); famx++)//family x
-	             {
-
-	            	 CFamily fam = familyContainer.findFam(indiv.getFamS().get(famx));
-	                 // check divorce date
+	            for (int famx=0; famx < (indiv.getFamS().size()); famx++)//family x
+	            {
+	            	CFamily fam = familyContainer.findFam(indiv.getFamS().get(famx));
+	                // check divorce date
 	                    
-	                    if (fam.getMarriedDate().isAfter(today))
-	                    {
-	                        String errMarried = new String ("individual " + indiv.getId() + " date of marriage " + fam.getDateMarried()
+	                if (fam.getMarriedDate().isAfter(today))
+	                {
+	                    String errMarried = new String ("individual " + indiv.getId() + " date of marriage " + fam.getDateMarried()
 	                        + " is after today");
-	                        printError(true, "US01", errMarried);
-	                    }//end of check of marriage date
+	                    printError(true, "US01", errMarried);
+	                }//end of check of marriage date
 	                    
-	                    if (fam.getDivorcedDate().isAfter(today))
-	                    {
-	                        String errDivorce = new String ("individual " + indiv.getId() + " date of death " + fam.getDivorcedDate() + " is after today");
-	                        printError(true, "US01", errDivorce);
-	                    }//end of check of divorce date                    
-	                    
-	                    
-	              }	 // end family loop           
-	         }// end if family size
-	     }// end of individual loop
-	
+	                if (fam.getDivorcedDate().isAfter(today))
+	                {
+	                    String errDivorce = new String ("individual " + indiv.getId() + " date of death " + fam.getDivorcedDate() + " is after today");
+	                    printError(true, "US01", errDivorce);
+	                }//end of check of divorce date                    
+	            }	 // end family loop           
+	        }// end if family size
+	    }// end of individual loop
 	}// end checkEventDatePriorToCurrentDate
 	
 	//********************************************************************
@@ -700,50 +694,46 @@ public class Functions {
 		
 	public static void checkChildBDatePriorToMotherOrFatherDeathDate(){
 	    CFamily fam;
-            Cindiv child, mom, dad;
+        Cindiv child, mom, dad;
         
-           // for each family
-	   for (int num=0; num < familyContainer.getSize(); num++)
-	     {
-	     fam = familyContainer.getFam(num);
+        // for each family
+	    for (int num=0; num < familyContainer.getSize(); num++)
+	    {
+	        fam = familyContainer.getFam(num);
             // if number of children > 0
-	     if (fam.getNumberOfChildren() > 0)
-              {
-              mom = indivContainer.findIndiv(fam.getWifeID());
-              dad = indivContainer.findIndiv(fam.getHusbandID());  
+	        if (fam.getNumberOfChildren() > 0)
+            {
+                mom = indivContainer.findIndiv(fam.getWifeID());
+                dad = indivContainer.findIndiv(fam.getHusbandID());  
 
 		        // for each child 
-	       for(int i = 0; i < fam.getNumberOfChildren(); i++)
+	            for(int i = 0; i < fam.getNumberOfChildren(); i++)
 		        {
-                  child = indivContainer.findIndiv(fam.getChildID(i));
+                    child = indivContainer.findIndiv(fam.getChildID(i));
 
-                  // Check birthdate prior to mother's death
-                  if (!mom.getIsAlive())
-                  {
-		      Cdate momDeathDate = mom.getDateDeath();
-		      if (child.getDateBirth().isAfter(momDeathDate))
-		      {
-			  String errBirthAfter = new String ("Individual " + child.getId() + "date of birth is after mother's date of death");
-			  printError(true,"US09",errBirthAfter);
-		      }// end check mother's death date
-                   }// end mom not alive
-                   if (!dad.getIsAlive())
-                   { 
-		       Cdate dadDeathDate = dad.getDateDeath();
- 
-        	       if ((child.getDateBirth().isAfter(dadDeathDate )) &&
-                          (child.getDateBirth().isWithin(dadDeathDate, 0, 9, 0)))
-	     	       {
-			  String errBirthAfter = new String ("Individual " + child.getId() + "date of birth is after dad's date of death plus 9 months");
-			      printError(true,"US09",errBirthAfter);
-		              }// check dad's death date
-		           } // end id dad not alive
-		        	
+                    // Check birthdate prior to mother's death
+                    if (!mom.getIsAlive())
+                    {
+		                Cdate momDeathDate = mom.getDateDeath();
+		                if (child.getDateBirth().isAfter(momDeathDate))
+		                {
+			                String errBirthAfter = new String ("Individual " + child.getId() + "date of birth is after mother's date of death");
+			                printError(true,"US09",errBirthAfter);
+		                }// end check mother's death date
+                    }// end mom not alive
+                    if (!dad.getIsAlive())
+                    { 
+		                Cdate dadDeathDate = dad.getDateDeath();
+        	            if ((child.getDateBirth().isAfter(dadDeathDate )) &&
+                            (child.getDateBirth().isWithin(dadDeathDate, 0, 9, 0)))
+	     	            {
+			                String errBirthAfter = new String ("Individual " + child.getId() + "date of birth is after dad's date of death plus 9 months");
+			                printError(true,"US09",errBirthAfter);
+		                }// check dad's death date
+		            } // end id dad not alive
 		        }//end for each child
-		    }// end if num of children > 0
-            	 
-         }// end family for loop
-        
+		    }// end if num of children > 0 
+        }// end family for loop
 	}// end checkChildBDatePriorToMotherOrFatherDeathDate
 	
 				

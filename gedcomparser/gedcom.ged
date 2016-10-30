@@ -23,6 +23,7 @@
 1 FAMC @F4@
 0 @I3@ INDI
 1 NOTE US03 Death Date before Birth Date
+1 NOTE US09 Death before birth of children
 1 NAME Beverly Ann /Progin/
 1 SEX F
 1 BIRT
@@ -128,12 +129,13 @@
 0 @I16@ INDI
 1 NOTE US41 Date year
 1 NOTE US17 Married descendant
+1 NOTE US09 Death before childs birth
 1 NAME Hiski /Matson/
 1 SEX M
 1 BIRT
 2 DATE 1914
 1 DEAT
-2 DATE 7 NOV 1982
+2 DATE 7 NOV 1942
 1 FAMS @F4@
 1 FAMS @F9@
 0 @I17@ INDI
