@@ -691,6 +691,61 @@ public class Functions {
 	     }// end of individual loop
 	
 	}// end checkEventDatePriorToCurrentDate
+	
+	//********************************************************************
+	// Child should be born before death of mother and before 9 months  
+	//	after death of father
+	// US09
+	//********************************************************************	
+		
+	public static void checkChildBDatePriorToMotherOrFatherDeathDate(){
+	    CFamily fam;
+            Cindiv child, mom, dad;
+        
+           // for each family
+	   for (int num=0; num < familyContainer.getSize(); num++)
+	     {
+	     fam = familyContainer.getFam(num);
+            // if number of children > 0
+	     if (fam.getNumberOfChildren() > 0)
+              {
+              mom = indivContainer.findIndiv(fam.getWifeID());
+              dad = indivContainer.findIndiv(fam.getHusbandID());  
+
+		        // for each child 
+	       for(int i = 0; i < fam.getNumberOfChildren(); i++)
+		        {
+                  child = indivContainer.findIndiv(fam.getChildID(i));
+
+                  // Check birthdate prior to mother's death
+                  if (!mom.getIsAlive())
+                  {
+		      Cdate momDeathDate = mom.getDateDeath();
+		      if (child.getDateBirth().isAfter(momDeathDate))
+		      {
+			  String errBirthAfter = new String ("Individual " + child.getId() + "date of birth is after mother's date of death");
+			  printError(true,"US09",errBirthAfter);
+		      }// end check mother's death date
+                   }// end mom not alive
+                   if (!dad.getIsAlive())
+                   { 
+		       Cdate dadDeathDate = dad.getDateDeath();
+ 
+        	       if ((child.getDateBirth().isAfter(dadDeathDate )) &&
+                          (child.getDateBirth().isWithin(dadDeathDate, 0, 9, 0)))
+	     	       {
+			  String errBirthAfter = new String ("Individual " + child.getId() + "date of birth is after dad's date of death plus 9 months");
+			      printError(true,"US09",errBirthAfter);
+		              }// check dad's death date
+		           } // end id dad not alive
+		        	
+		        }//end for each child
+		    }// end if num of children > 0
+            	 
+         }// end family for loop
+        
+	}// end checkChildBDatePriorToMotherOrFatherDeathDate
+	
 				
 	//********************************************************************
 	// Print error if ny individual is over 150 years old (alive or dead)
