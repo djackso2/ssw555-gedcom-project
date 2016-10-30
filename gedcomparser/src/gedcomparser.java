@@ -76,5 +76,8 @@ public class gedcomparser {
     
         //US26 check for corresponding family entries
         Functions.checkCorFamTags();
+        
+        //US01 check for future events
+        Functions.checkEventDatePriorToCurrentDate();
     }
 }

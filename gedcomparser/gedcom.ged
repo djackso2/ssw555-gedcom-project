@@ -85,10 +85,13 @@
 2 DATE 8 JAN 2010
 1 FAMC @F5@
 0 @I10@ INDI
+1 NOTE US01 Died in the future
 1 NAME Brandin /Beverly-Twigg/
 1 SEX M
 1 BIRT
 2 DATE 20 FEB 1984
+1 DEAT
+2 DATE 20 FEB 2064
 1 FAMS @F6@
 1 FAMS @F7@
 0 @I11@ INDI
@@ -98,10 +101,11 @@
 2 DATE 20 FEB 2005
 1 FAMC @F6@
 0 @I12@ INDI
+1 NOTE US01 Born in the future
 1 NAME Kirsten Claire /Beverly-Twigg/
 1 SEX F
 1 BIRT
-2 DATE 19 MAR 2007
+2 DATE 19 MAR 2017
 1 FAMC @F6@
 0 @I13@ INDI
 1 NAME Kathy /Welch/
@@ -340,11 +344,14 @@
 1 CHIL @I12@
 0 NOTE Test family with incorrect spouse genders US21
 0 NOTE Expecting 2 errors, one for each spouse
+0 NOTE US01 Married and divorce in the future
 0 @F7@ FAM
 1 HUSB @I5@
 1 WIFE @I10@
 1 MARR
-2 DATE 15 JUN 2004
+2 DATE 15 JUN 2024
+1 DIV
+2 DATE 15 JUN 2034
 0 @F8@ FAM
 1 HUSB @I100@
 1 WIFE @I99@

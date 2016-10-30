@@ -719,7 +719,6 @@ public class Functions {
 
 		Cindiv indiv;
 		CFamily family;
-		String errorString;
 		boolean flag;				
 		
 		for(int fIndex = 0; fIndex < familyContainer.getSize(); fIndex++){					//iterate through families
