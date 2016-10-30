@@ -633,6 +633,64 @@ public class Functions {
 		    }
 					
 		}// end of checkForBigamy
+	
+	//********************************************************************
+	// Dates (birth, marriage, divorce, death) should not be after 
+	//	the current date
+	// US01
+	//********************************************************************			
+		
+	public static void checkEventDatePriorToCurrentDate(){
+		
+		Cdate today = new Cdate();
+		Cindiv indiv = null;
+		
+		//check each individual's  marriage date and/or divorce date
+	    for (int num = 0; num < indivContainer.getSize(); num++)
+	    {
+	        indiv = indivContainer.getIndiv(num);
+	        
+
+	        // Check birthdate here 
+			if (indiv.getDateBirth().isAfter(today)){
+				String errBirth = new String ("Individual " + indiv.getId() + "date of birth is after today");
+				printError(true,"US01",errBirth);
+			}// end check birth date
+			
+			// check date of death
+			if (indiv.getDateDeath().isAfter(today)){
+				String errDeath = new String ("Individual " + indiv.getId() + "date of death is after today");
+				 printError(true,"US01",errDeath );
+			}// end check death date
+
+
+	        if (indiv.getFamS().size() > 1)
+	        {
+	             for (int famx=0; famx < (indiv.getFamS().size()); famx++)//family x
+	             {
+
+	            	 CFamily fam = familyContainer.findFam(indiv.getFamS().get(famx));
+	                 // check divorce date
+	                    
+	                    if (fam.getMarriedDate().isAfter(today))
+	                    {
+	                        String errMarried = new String ("individual " + indiv.getId() + " date of marriage " + fam.getDateMarried()
+	                        + " is after today");
+	                        printError(true, "US01", errMarried);
+	                    }//end of check of marriage date
+	                    
+	                    if (fam.getDivorcedDate().isAfter(today))
+	                    {
+	                        String errDivorce = new String ("individual " + indiv.getId() + " date of death " + fam.getDivorcedDate() + " is after today");
+	                        printError(true, "US01", errDivorce);
+	                    }//end of check of divorce date                    
+	                    
+	                    
+	              }	 // end family loop           
+	         }// end if family size
+	     }// end of individual loop
+	
+	}// end checkEventDatePriorToCurrentDate
 				
 	//********************************************************************
 	// Print error if ny individual is over 150 years old (alive or dead)
