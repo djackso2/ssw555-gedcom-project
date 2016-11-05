@@ -1,0 +1,560 @@
+File: ..\gedcom.ged
+
+List of Individuals
+ID:                 @I1@
+Name                Stephen Lee /Matson/
+Gender:             M
+Date of Birth:      19 AUG 1963
+Alive:              true
+Child of Family:    @F2@
+Spouse of Family:   [@F1@]
+
+ID:                 @I2@
+Name                Terry Lee /Matson/
+Gender:             M
+Date of Birth:      NOV 1938
+Alive:              true
+Child of Family:    @F4@
+Spouse of Family:   [@F2@, @F3@]
+
+ID:                 @I3@
+Name                Beverly Ann /Progin/
+Gender:             F
+Date of Birth:      31 MAY 1938
+Alive:              false
+Date of Death:      28 MAY 1934
+Child of Family:    None
+Spouse of Family:   [@F2@]
+
+ID:                 @I4@
+Name                Brenda Louise /Turner/
+Gender:             F
+Date of Birth:      23 OCT 1964
+Alive:              true
+Child of Family:    None
+Spouse of Family:   [@F1@]
+
+ID:                 @I0001@
+Name                Brenda Louise /Turner/
+Gender:             None
+Date of Birth:      23 OCT 1964
+Alive:              true
+Child of Family:    None
+Spouse of Family:   []
+
+ID:                 @I5@
+Name                Sarah Beth /Matson/
+Gender:             F
+Date of Birth:      15 APR 1986
+Alive:              true
+Child of Family:    @F1@
+Spouse of Family:   [@F5@, @F6@, @F7@, @F9@]
+
+ID:                 @I6@
+Name                Kelsey Marie /Matson/
+Gender:             F
+Date of Birth:      26 JUL 1993
+Alive:              true
+Child of Family:    @F1@
+Spouse of Family:   []
+
+ID:                 @I006@
+Name                Kelsey Marie /Matson/
+Gender:             F
+Date of Birth:      26 JUL 1993
+Alive:              true
+Child of Family:    @F1@
+Spouse of Family:   []
+
+ID:                 @I7@
+Name                Kaitlyn Ann /Matson/
+Gender:             F
+Date of Birth:      8 AUG 1994
+Alive:              true
+Child of Family:    @F1@
+Spouse of Family:   []
+
+ID:                 @I8@
+Name                Daniel /Hinkle/
+Gender:             M
+Date of Birth:      25 JUN 1984
+Alive:              true
+Child of Family:    None
+Spouse of Family:   [@F5@]
+
+ID:                 @I9@
+Name                Kalista Avery /Hinkle/
+Gender:             F
+Date of Birth:      8 JAN 2010
+Alive:              true
+Child of Family:    @F5@
+Spouse of Family:   []
+
+ID:                 @I10@
+Name                Brandin /Beverly-Twigg/
+Gender:             M
+Date of Birth:      20 FEB 1984
+Alive:              false
+Date of Death:      20 FEB 2064
+Child of Family:    None
+Spouse of Family:   [@F6@, @F7@]
+
+ID:                 @I11@
+Name                Tyler Michael /Beverly-Twigg/
+Gender:             M
+Date of Birth:      20 FEB 2005
+Alive:              true
+Child of Family:    @F6@
+Spouse of Family:   []
+
+ID:                 @I12@
+Name                Kirsten Claire /Beverly-Twigg/
+Gender:             F
+Date of Birth:      19 MAR 2017
+Alive:              true
+Child of Family:    @F6@
+Spouse of Family:   []
+
+ID:                 @I13@
+Name                Kathy /Welch/
+Gender:             F
+Date of Birth:      26 MAR 1956
+Alive:              true
+Child of Family:    None
+Spouse of Family:   [@F3@]
+
+ID:                 @I14@
+Name                Deborah Ann /Matson/
+Gender:             F
+Date of Birth:      5 JUN 1961
+Alive:              true
+Child of Family:    @F2@
+Spouse of Family:   []
+
+ID:                 @I15@
+Name                Scott John /Matson/
+Gender:             M
+Date of Birth:      9 FEB 1975
+Alive:              true
+Child of Family:    @F2@
+Spouse of Family:   []
+
+ID:                 @I16@
+Name                Hiski /Matson/
+Gender:             M
+Date of Birth:      1914
+Alive:              false
+Date of Death:      7 NOV 1942
+Child of Family:    None
+Spouse of Family:   [@F4@, @F9@]
+
+ID:                 @I17@
+Name                Eunice Jane /Proffit/
+Gender:             F
+Date of Birth:      1918
+Alive:              false
+Date of Death:      12 FEB 1981
+Child of Family:    None
+Spouse of Family:   [@F4@]
+
+ID:                 @I18@
+Name                Bruce /Matson/
+Gender:             M
+Date of Birth:      FEB 1943
+Alive:              true
+Child of Family:    @F4@
+Spouse of Family:   []
+
+ID:                 @I19@
+Name                Peter Lyle /Matson/
+Gender:             M
+Date of Birth:      MAR 1947
+Alive:              true
+Child of Family:    @F4@
+Spouse of Family:   []
+
+ID:                 @I100@
+Name                Hubby /Test/
+Gender:             M
+Date of Birth:      26 MAR 1930
+Alive:              true
+Child of Family:    None
+Spouse of Family:   [@F8@]
+
+ID:                 @I20@
+Name                George /Matson/
+Gender:             M
+Date of Birth:      1932
+Alive:              false
+Date of Death:      7 NOV 1978
+Child of Family:    None
+Spouse of Family:   [@F10@]
+
+ID:                 @I21@
+Name                Sue Ellen /Smith/
+Gender:             F
+Date of Birth:      1935
+Alive:              false
+Date of Death:      12 FEB 1975
+Child of Family:    None
+Spouse of Family:   []
+
+ID:                 @I30@
+Name                Jane Doe
+Gender:             F
+Date of Birth:      23 OCT 1964
+Alive:              false
+Date of Death:      18 OCT 2016
+Child of Family:    None
+Spouse of Family:   [@F100@]
+
+ID:                 @I31@
+Name                John Doe
+Gender:             M
+Date of Birth:      23 OCT 1960
+Alive:              true
+Child of Family:    None
+Spouse of Family:   [@F100@]
+
+ID:                 @I40@
+Name                Jenny Doe
+Gender:             F
+Date of Birth:      None
+Alive:              true
+Child of Family:    @F100@
+Spouse of Family:   []
+
+ID:                 @I50@
+Name                Josie Doe
+Gender:             F
+Date of Birth:      None
+Alive:              true
+Child of Family:    @F100@
+Spouse of Family:   []
+
+ID:                 @I99@
+Name                Honey /Hope/
+Gender:             F
+Date of Birth:      27 MAR 1930
+Alive:              true
+Child of Family:    None
+Spouse of Family:   [@F8@]
+
+ID:                 @I101@
+Name                chid1 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1950
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I102@
+Name                chid2 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1951
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I103@
+Name                chid3 /Test/
+Gender:             M
+Date of Birth:      27 MAR 1951
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I104@
+Name                chid4 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1952
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I105@
+Name                chid5 /Test/
+Gender:             M
+Date of Birth:      26 AUG 1952
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I106@
+Name                chid6 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1954
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I107@
+Name                chid7 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1954
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I108@
+Name                chid8 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1954
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I109@
+Name                chid9 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1954
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I110@
+Name                chid10 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1954
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I111@
+Name                chid11 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1955
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I112@
+Name                chid12 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1956
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I113@
+Name                chid13 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1957
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I114@
+Name                chid14 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1958
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I115@
+Name                chid15 /Test/
+Gender:             M
+Date of Birth:      26 MAR 1959
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @I116@
+Name                chid16 /Test/
+Gender:             M
+Date of Birth:      26 NOV 1959
+Alive:              true
+Child of Family:    @F8@
+Spouse of Family:   []
+
+ID:                 @IUS07@
+Name                Old Guy
+Gender:             M
+Date of Birth:      23 OCT 1860
+Alive:              true
+Child of Family:    None
+Spouse of Family:   []
+
+
+List of Families
+
+Family ID:          @F1@
+Date of Marriage:   8 NOV 1985
+Date of Divorce:    None
+Husband:            @I1@ - Stephen Lee /Matson/
+Wife:               @I4@ - Brenda Louise /Turner/
+Children:           @I5@ - Sarah Beth /Matson/
+                    @I6@ - Kelsey Marie /Matson/
+                    @I7@ - Kaitlyn Ann /Matson/
+
+Family ID:          @F2@
+Date of Marriage:   18 JUN 1960
+Date of Divorce:    1 JAN 1996
+Husband:            @I2@ - Terry Lee /Matson/
+Wife:               @I3@ - Beverly Ann /Progin/
+Children:           @I1@ - Stephen Lee /Matson/
+                    @I14@ - Deborah Ann /Matson/
+                    @I15@ - Scott John /Matson/
+
+Family ID:          @F3@
+Date of Marriage:   1 NOV 2000
+Date of Divorce:    None
+Husband:            @I2@ - Terry Lee /Matson/
+Wife:               @I13@ - Kathy /Welch/
+
+Family ID:          @F4@
+Date of Marriage:   4 JUN 1937
+Date of Divorce:    None
+Husband:            @I16@ - Hiski /Matson/
+Wife:               @I17@ - Eunice Jane /Proffit/
+Children:           @I2@ - Terry Lee /Matson/
+                    @I18@ - Bruce /Matson/
+                    @I19@ - Peter Lyle /Matson/
+
+Family ID:          @F5@
+Date of Marriage:   27 MAY 2012
+Date of Divorce:    None
+Husband:            @I8@ - Daniel /Hinkle/
+Wife:               @I5@ - Sarah Beth /Matson/
+Children:           @I9@ - Kalista Avery /Hinkle/
+
+Family ID:          @F6@
+Date of Marriage:   15 JUN 2004
+Date of Divorce:    1 APR 2008
+Husband:            @I10@ - Brandin /Beverly-Twigg/
+Wife:               @I5@ - Sarah Beth /Matson/
+Children:           @I11@ - Tyler Michael /Beverly-Twigg/
+                    @I12@ - Kirsten Claire /Beverly-Twigg/
+
+Family ID:          @F7@
+Date of Marriage:   15 JUN 2024
+Date of Divorce:    15 JUN 2034
+Husband:            @I5@ - Sarah Beth /Matson/
+Wife:               @I10@ - Brandin /Beverly-Twigg/
+
+Family ID:          @F8@
+Date of Marriage:   15 JUN 1948
+Date of Divorce:    None
+Husband:            @I100@ - Hubby /Test/
+Wife:               @I99@ - Honey /Hope/
+Children:           @I101@ - chid1 /Test/
+                    @I102@ - chid2 /Test/
+                    @I103@ - chid3 /Test/
+                    @I104@ - chid4 /Test/
+                    @I105@ - chid5 /Test/
+                    @I106@ - chid6 /Test/
+                    @I107@ - chid7 /Test/
+                    @I108@ - chid8 /Test/
+                    @I109@ - chid9 /Test/
+                    @I110@ - chid10 /Test/
+                    @I111@ - chid11 /Test/
+                    @I112@ - chid12 /Test/
+                    @I113@ - chid13 /Test/
+                    @I114@ - chid14 /Test/
+                    @I115@ - chid15 /Test/
+                    @I116@ - chid16 /Test/
+
+Family ID:          @F9@
+Date of Marriage:   15 JUN 1948
+Date of Divorce:    None
+Husband:            @I16@ - Hiski /Matson/
+Wife:               @I5@ - Sarah Beth /Matson/
+
+Family ID:          @F10@
+Date of Marriage:   15 MAY 1980
+Date of Divorce:    None
+Husband:            @I20@ - George /Matson/
+Wife:               @I21@ - Sue Ellen /Smith/
+
+Family ID:          @F100@
+Date of Marriage:   8 NOV 1985
+Date of Divorce:    None
+Husband:            @I1@ - Stephen Lee /Matson/
+Wife:               @I30@ - Jane Doe
+Children:           @I40@ - Jenny Doe
+                    @I50@ - Josie Doe
+
+
+(US37) Recently deceased individual @I30@ has the following descendants:
+@I40@
+@I50@
+
+(US39) The following married couples celebrate wedding anniversaries within the next 30 days from today 11/05/2016:
+     Stephen Lee /Matson/ and Brenda Louise /Turner/ married 8 NOV 1985
+
+(US41) The following are short date formats in the Gedcom file:
+ID: @I2@ DOB: NOV 1938
+ID: @I16@ DOB: 1914
+ID: @I17@ DOB: 1918
+ID: @I18@ DOB: FEB 1943
+ID: @I19@ DOB: MAR 1947
+ID: @I20@ DOB: 1932
+ID: @I21@ DOB: 1935
+
+Error: US03: Death date (28 MAY 1934) of Beverly Ann /Progin/ (@I3@) occurs before birth date (31 MAY 1938)
+
+Anomaly: US08: Birth date (08 JAN 2010) of Kalista Avery /Hinkle/ (@I9@) occurs before parents marriage date (27 MAY 2012)
+
+Error: US23: Individual @I4@ Brenda Louise /Turner/ with birthdate 23 OCT 1964 is not unique in this GEDCOM file.
+Duplicate individual ID is @I0001@.
+
+Error: US23: Individual @I6@ Kelsey Marie /Matson/ with birthdate 26 JUL 1993 is not unique in this GEDCOM file.
+Duplicate individual ID is @I006@.
+
+Error: US25: Duplicate individuals are also children of the same family.
+Family ID in which individuals are duplicates is @F1@
+
+Error: US21: Family @F7@ husband Sarah Beth /Matson/ is not Male.
+
+Error: US21: Family @F7@ wife Brandin /Beverly-Twigg/ is not Female.
+
+Anomaly: US15: Greater than 15 children in this family. @F8@ Number of children: 16
+
+Anomaly: US13: @I104@ and @I105@ are not likely to be siblings in family: @F8@
+
+Error: US17: In the family (@F9@), the wife (@I5@) is a descendant of the husband (@I16@)
+
+Error: US05: Wife ID @I3@ date of death 28 MAY 1934 is before marriage date 18 JUN 1960 for family @F2@
+
+Error: US06: Wife ID @I3@ date of death 28 MAY 1934 is before divorce date 1 JAN 1996 for family @F2@
+
+Error: US05: Husband ID @I16@ date of death 07 NOV 1942 is before marriage date 15 JUN 1948 for family @F9@
+
+Error: US05: Husband ID @I20@ date of death 07 NOV 1978 is before marriage date 15 MAY 1980 for family @F10@
+
+Error: US05: Wife ID @I21@ date of death 12 FEB 1975 is before marriage date 15 MAY 1980 for family @F10@
+
+Error: US11: individual @I5@ is married to more than one person
+
+Error: US07: Individual @IUS07@ is over 150 years old. Age is 156.46 years.
+
+Error: US26: Individual @I21@ is indicated as the wife of family @F10@ in the family record but does not list the correct family ID.
+
+Error: US26: Individual @I1@ is indicated as the husband of family @F100@ in the family record but does not list the correct family ID.
+
+Error: US26: Individual @I006@ is indicated as a child of family @F1@ but that family has no record of that individual as a child.
+
+Error: US01: individual @I5@ date of marriage 15 JUN 2024 is after today
+
+Error: US01: individual @I5@ date of divorce 15 JUN 2034 is after today
+
+Error: US01: Individual @I10@date of death is after today
+
+Error: US01: individual @I10@ date of marriage 15 JUN 2024 is after today
+
+Error: US01: individual @I10@ date of divorce 15 JUN 2034 is after today
+
+Error: US01: Individual @I12@date of birth is after today
+
+Error: US09: Individual @I1@date of birth is after mother's date of death
+
+Error: US09: Individual @I14@date of birth is after mother's date of death
+
+Error: US09: Individual @I15@date of birth is after mother's date of death
+
+Error: US09: Individual @I18@date of birth is after dad's date of death plus 9 months
+
+Error: US09: Individual @I40@date of birth is after mother's date of death
+
+Error: US09: Individual @I50@date of birth is after mother's date of death

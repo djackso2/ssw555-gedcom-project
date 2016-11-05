@@ -80,7 +80,7 @@ public class gedcomparser {
         //US01 check for future events
         Functions.checkEventDatePriorToCurrentDate();
         
-        // US09 child born after parents death
-        Functions.checkChildBDatePriorToMotherOrFatherDeathDate();
+        // Checks for invalid child's birth dates
+        Functions.checkChildBDate();
     }
 }

@@ -687,12 +687,13 @@ public class Functions {
 	}// end checkEventDatePriorToCurrentDate
 	
 	//********************************************************************
-	// Child should be born before death of mother and before 9 months  
-	//	after death of father
-	// US09
+	// US09 - Child should be born before death of mother and before 9 months  
+	//	      after death of father
+	// US12 - Mother should be less than 60 years older than her children
+	//        and father should be less than 80 years older than his children
 	//********************************************************************	
 		
-	public static void checkChildBDatePriorToMotherOrFatherDeathDate(){
+	public static void checkChildBDate(){
 	    CFamily fam;
         Cindiv child, mom, dad;
         
@@ -721,6 +722,7 @@ public class Functions {
 			                printError(true,"US09",errBirthAfter);
 		                }// end check mother's death date
                     }// end mom not alive
+                    // Check birthdate prior to father's death (minus 9 months)
                     if (!dad.getIsAlive())
                     { 
 		                Cdate dadDeathDate = dad.getDateDeath();
@@ -731,6 +733,20 @@ public class Functions {
 			                printError(true,"US09",errBirthAfter);
 		                }// check dad's death date
 		            } // end id dad not alive
+                    // Check birthdate is before Mother is 60
+                    if (!child.getDateBirth().isWithin(mom.getDateBirth(), 60, 0, 0))
+                    {
+                    	String errBirth = new String ("Mother's (" + mom.getId() + ") birthdate (" + mom.getDateBirth().get() + ") is more than 60 years before child's (" 
+                                          + child.getId() + ") birthdate (" + child.getDateBirth().get() + ")");
+		                printError(true,"US12",errBirth);
+                    }
+                    // Check birthdate is before fathers is 80
+                    if (!child.getDateBirth().isWithin(dad.getDateBirth(), 80, 0, 0))
+                    {
+                    	String errBirth = new String ("Father's (" + dad.getId() + ") birthdate (" + dad.getDateBirth().get() + ") is more than 80 years before child's (" 
+                                          + child.getId() + ") birthdate (" + child.getDateBirth().get() + ")");
+		                printError(true,"US12",errBirth);
+                    }
 		        }//end for each child
 		    }// end if num of children > 0 
         }// end family for loop

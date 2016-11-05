@@ -161,6 +161,20 @@
 1 BIRT
 2 DATE MAR 1947
 1 FAMC @F4@
+0 NOTE US12 born more than 60 years after mother 
+0 @I22@ INDI
+1 NAME Paul /Matson/
+1 SEX M
+1 BIRT
+2 DATE 13 NOV 1979
+1 FAMC @F4@
+0 NOTE US12 born more than 80 years after father 
+0 @I23@ INDI
+1 NAME Ringo /Matson/
+1 SEX M
+1 BIRT
+2 DATE 13 NOV 1995
+1 FAMC @F4@
 0 NOTE The following individuals are used for US testing
 0 @I100@ INDI
 1 NAME Hubby /Test/
@@ -329,6 +343,8 @@
 1 CHIL @I2@
 1 CHIL @I18@
 1 CHIL @I19@
+1 CHIL @I22@
+1 CHIL @I23@
 0 @F5@ FAM
 1 HUSB @I8@
 1 WIFE @I5@
