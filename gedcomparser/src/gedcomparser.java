@@ -53,6 +53,9 @@ public class gedcomparser {
         //Check Unique Individuals US23
         Functions.checkUniqueIndividuals();
         
+        //Check Unique Families
+        Functions.checkUniqueFamilies();
+        
         //Check Spouse Genders US21
         Functions.checkSpouseGenders();
 	

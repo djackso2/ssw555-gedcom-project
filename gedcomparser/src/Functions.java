@@ -280,42 +280,61 @@ public class Functions {
 	
 	// Validation section****************************************************************************************	
 	//********************************************************************
-	// Check unique Name/BirthDate combinations for all individuals
-	// US23
-	// Include second error and family ID if the duplicate individuals 
+	// US23 - Check unique Name/BirthDate combinations for all individuals
+	// US25 - Include second error and family ID if the duplicate individuals 
 	// are both listed as children in the same family
-	// US25
+	// US22 - All IDs are unique
 	//********************************************************************	
 	public static void checkUniqueIndividuals(){
 		Cindiv indiv;
 		Cindiv indivForCompare;
-		ArrayList<Cindiv> duplicates = new ArrayList<Cindiv>();
-		
+
 		for (int i=0; i<indivContainer.getSize()-1;i++){
 			indiv = indivContainer.getIndiv(i);
 			for(int j=(i+1);j<indivContainer.getSize();j++){
 				indivForCompare = indivContainer.getIndiv(j);				
-				if(!indiv.getId().equals(indivForCompare.getId()) && !duplicates.contains(indiv)){
 			
-					if(isSameNameBDate(indiv, indivForCompare)){						
-						String errorString = "Individual " + indiv.getId() + " " + indiv.getName() + 
+				if(isSameNameBDate(indiv, indivForCompare)){						
+					String errorString = "Individual " + indiv.getId() + " " + indiv.getName() + 
 								" with birthdate " +indiv.getDateBirth().getStringDate()+ " is not unique in this GEDCOM file.\n"
 								+ "Duplicate individual ID is " + indivForCompare.getId() + ".";
-						duplicates.add(indivForCompare);
-				
-						printError(true, "US23", errorString);
+					printError(true, "US23", errorString);
 						
-						if((indiv.getFamC().equals(indivForCompare.getFamC()))&&!indiv.getFamC().equals("None")){
-							errorString = "Duplicate individuals are also children of the same family.\n"
-									+ "Family ID in which individuals are duplicates is " + indiv.getFamC();
-							
-							printError(true,"US25", errorString);
-						}			
+					if((indiv.getFamC().equals(indivForCompare.getFamC()))&&!indiv.getFamC().equals("None")){
+						errorString = "Duplicate individuals are also children of the same family.\n"
+									+ "Family ID in which individuals are duplicates is " + indiv.getFamC();	
+						printError(true,"US25", errorString);
 					}			
+				}
+				if (indiv.getId().equals(indivForCompare.getId()))
+				{
+					String errorString = "There are duplicate Individual IDs (" + indiv.getId() + ") in the GEDCOM file.";
+					printError(true, "US22", errorString);
 				}
 			}
 		}
-	}
+	} 
+	//********************************************************************
+	// US22 - All IDs are unique
+	//********************************************************************	
+	public static void checkUniqueFamilies(){
+		CFamily fam;
+		CFamily famForCompare;
+
+		for (int i=0; i<familyContainer.getSize()-1;i++){
+			fam = familyContainer.getFam(i);
+			for(int j=(i+1);j<familyContainer.getSize();j++){
+				famForCompare = familyContainer.getFam(j);				
+			
+				if (fam.getFamID().equals(famForCompare.getFamID()))
+				{
+					String errorString = "There are duplicate Family IDs (" + fam.getFamID() + ") in the GEDCOM file.";
+					printError(true, "US22", errorString);
+				}
+			}
+		}
+	} 
+	
 	
 	//********************************************************************
 	// Helper to reduce multi-line conditionals when searching for
@@ -352,7 +371,7 @@ public class Functions {
 	// Check Indiv Events
 	//    US03 - Check Death Date on Individuals
 	//    US08 - Birth before marriage of parents
-	// 
+	//    
 	//********************************************************************
 	public static void checkIndivEvents()
 	{

@@ -175,6 +175,13 @@
 1 BIRT
 2 DATE 13 NOV 1995
 1 FAMC @F4@
+0 NOTE US22 duplicate Individual ID
+0 @I23@ INDI
+1 NAME John /Matson/
+1 SEX M
+1 BIRT
+2 DATE 13 NOV 1945
+1 FAMC @F4@
 0 NOTE The following individuals are used for US testing
 0 @I100@ INDI
 1 NAME Hubby /Test/
@@ -424,6 +431,12 @@
 2 DATE 8 NOV 1985
 1 CHIL @I40@
 1 CHIL @I50@
+0 NOTE US22 Family with duplicate ID
+0 @F100@ FAM
+1 HUSB @I101@
+1 WIFE @I30@
+1 MARR
+2 DATE 8 NOV 1985
 0 @IUS07@ INDI
 1 NOTE added to test US07
 1 NAME Old Guy
