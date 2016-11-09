@@ -871,6 +871,28 @@ public class Functions {
 	}
 	
 	
+	//***************************************************************************************
+	// Determine individual's current age
+	//
+	// US27
+	//***************************************************************************************
+	
+	public static void determineCurrentAge(){
+		Cindiv indiv;
+		Cdate today = new Cdate();
+		double currentAge = 0;
+		
+		for (int i = 0; i < indivContainer.getSize(); i++)
+		{
+			indiv = indivContainer.getIndiv(i);
+			currentAge = indiv.getDateBirth().getYearDif(today);
+		}
+            
+			System.out.print("Current Age is       ");
+			System.out.format("%-10.3f%n", currentAge);
+
+	  }// end determineCurrentAge
+	
 	
 	// Print section****************************************************************************************	
 	//********************************************************************
@@ -892,7 +914,9 @@ public class Functions {
 			System.out.printf("%-20s%s\n", "Alive:", indiv.getIsAlive());
 			if(!indiv.getIsAlive())
 				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().get());
-
+            		//added for US27
+            		determineCurrentAge();
+			
 			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
 			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
 			
