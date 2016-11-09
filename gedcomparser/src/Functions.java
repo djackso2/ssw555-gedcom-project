@@ -915,7 +915,7 @@ public class Functions {
 			if(!indiv.getIsAlive())
 				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().get());
             		//added for US27
-            		determineCurrentAge();
+            		else determineCurrentAge();
 			
 			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
 			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
