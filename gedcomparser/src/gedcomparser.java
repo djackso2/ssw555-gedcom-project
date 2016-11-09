@@ -85,5 +85,8 @@ public class gedcomparser {
         
         // Checks for invalid child's birth dates
         Functions.checkChildBDate();
+	    
+        // US 29 lists all deceased individuals
+        Functions.listAllDeceasedIndividuals();
     }
 }
