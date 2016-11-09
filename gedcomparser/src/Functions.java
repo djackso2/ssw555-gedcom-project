@@ -893,6 +893,34 @@ public class Functions {
 
 	  }// end determineCurrentAge
 	
+	//*****************************************************************************************************
+	//
+	//   List all deceased individuals in a GEDCOM file
+	//
+	//   US 29
+	//
+	//*****************************************************************************************************
+	
+	public static void listAllDeceasedIndividuals()
+	{
+		Cindiv indiv;
+	    
+		System.out.println("\nList of Deceased Individuals");
+		
+		for (int num=0; num < indivContainer.getSize(); num++)
+		{
+			indiv = indivContainer.getIndiv(num);
+			if(!indiv.getIsAlive())
+			{
+				System.out.printf("%-20s%s\n", "Name", indiv.getName());
+				
+			}// end if
+			
+		}// end for
+		
+		
+		
+	}// end listAllDeceasedIndividuals
 	
 	// Print section****************************************************************************************	
 	//********************************************************************
