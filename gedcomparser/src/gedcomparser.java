@@ -37,6 +37,12 @@ public class gedcomparser {
         // Print the Families
         Functions.printFam();
         
+        // US 29 lists all deceased individuals
+        Functions.listAllDeceasedIndividuals();
+        
+        // US31 show individuals over 30 who've never been married
+        Functions.listOver30Singles();
+        
         // US37 show descendants of recently deceased
         Functions.listSurvivors();     
         
@@ -85,8 +91,5 @@ public class gedcomparser {
         
         // Checks for invalid child's birth dates
         Functions.checkChildBDate();
-	    
-        // US 29 lists all deceased individuals
-        Functions.listAllDeceasedIndividuals();
     }
 }

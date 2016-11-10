@@ -54,11 +54,12 @@ public class Functions {
     	Cindiv indiv = null;
     	CFamily fam = null;
     	int level;
+    	int lineNumber = 0;
     	LVL0 lvl0 = LVL0.NONE;
     	LVL1 lvl1 = LVL1.NONE;
     	List<String> p1tagList = initP1TagLists();  // set of valid tags
     	List<String> p2tagList = initP2TagLists();  // set of valid tags 	
-    	
+    	    	
 		// Open the file for reading
 		try
 		{
@@ -81,19 +82,20 @@ public class Functions {
 			while ((line = bufReader.readLine()) != null)
 			{    			
 				parseLine(line, lineItems);
+				lineNumber++;
 				tag = getTag(lineItems, p1tagList, p2tagList);
 				level = Integer.parseInt(lineItems[0]);
 			
 				// new Invid 
 				if ((level == 0) && (tag.equals("INDI")))
 				{
-					indiv = indivContainer.addIndiv(lineItems[1]);
+					indiv = indivContainer.addIndiv(lineItems[1], lineNumber);
 					lvl0 = LVL0.INDI;
 				}
 				//  new Family 
 				else if ((level == 0) && (tag.equals("FAM")))
 				{
-					fam = familyContainer.addFam(lineItems[1]);
+					fam = familyContainer.addFam(lineItems[1], lineNumber);
 					lvl0 = LVL0.FAM; 
 				}
 				// other level 0 tags
@@ -298,18 +300,18 @@ public class Functions {
 					String errorString = "Individual " + indiv.getId() + " " + indiv.getName() + 
 								" with birthdate " +indiv.getDateBirth().getStringDate()+ " is not unique in this GEDCOM file.\n"
 								+ "Duplicate individual ID is " + indivForCompare.getId() + ".";
-					printError(true, "US23", errorString);
+					printError(true, "US23", errorString, new int[]{indiv.getLineNumber(),indivForCompare.getLineNumber()});
 						
 					if((indiv.getFamC().equals(indivForCompare.getFamC()))&&!indiv.getFamC().equals("None")){
 						errorString = "Duplicate individuals are also children of the same family.\n"
 									+ "Family ID in which individuals are duplicates is " + indiv.getFamC();	
-						printError(true,"US25", errorString);
+						printError(true,"US25", errorString, new int[]{indiv.getLineNumber(),indivForCompare.getLineNumber()});
 					}			
 				}
 				if (indiv.getId().equals(indivForCompare.getId()))
 				{
 					String errorString = "There are duplicate Individual IDs (" + indiv.getId() + ") in the GEDCOM file.";
-					printError(true, "US22", errorString);
+					printError(true, "US22", errorString, new int[]{indiv.getLineNumber(),indivForCompare.getLineNumber()});
 				}
 			}
 		}
@@ -329,7 +331,7 @@ public class Functions {
 				if (fam.getFamID().equals(famForCompare.getFamID()))
 				{
 					String errorString = "There are duplicate Family IDs (" + fam.getFamID() + ") in the GEDCOM file.";
-					printError(true, "US22", errorString);
+					printError(true, "US22", errorString, new int[] {fam.getLineNumber(), famForCompare.getLineNumber()});
 				}
 			}
 		}
@@ -357,12 +359,12 @@ public class Functions {
 			if(!husb.getGender().equals("M")){
 				String errorString = "Family "+ fam.getFamID()+ " husband " + husb.getName() +
 						" is not Male.";
-				printError(true, "US21", errorString);
+				printError(true, "US21", errorString, new int[] {fam.getLineNumber()});
 			}
 			if(!wife.getGender().equals("F")){
 				String errorString = "Family "+ fam.getFamID()+ " wife " + wife.getName() +
 						" is not Female.";
-				printError(true, "US21", errorString);				
+				printError(true, "US21", errorString, new int[] {fam.getLineNumber()});				
 			}			
 		}
 	}	
@@ -384,13 +386,13 @@ public class Functions {
 			if (indiv.isDeathBeforeBirth()) {
 				String text = String.format("Death date (%s) of %s (%s) occurs before birth date (%s)", 
 						indiv.getDateDeath().getStringDate(), indiv.getName(), indiv.getId(), indiv.getDateBirth().getStringDate());
-				printError(true, "US03", text);
+				printError(true, "US03", text, new int[] {indiv.getLineNumber()});
 			}
 			fam =  familyContainer.findFam(indiv.getFamC());
 			if ((fam != null) && (indiv.getDateBirth().isBefore(fam.getMarriedDate()))) {
 				String anomStr = String.format("Birth date (%s) of %s (%s) occurs before parents marriage date (%s)", 
 						indiv.getDateBirth().getStringDate(), indiv.getName(), indiv.getId(), fam.getMarriedDate().getStringDate());
-				printError(false, "US08", anomStr);
+				printError(false, "US08", anomStr, new int[] {fam.getLineNumber()});
 			}
 			
 		}
@@ -409,7 +411,7 @@ public class Functions {
 			if(fam.getNumberOfChildren()>15){
 				String anom = new String("Greater than 15 children in this family. " 
 					+ fam.getFamID() + " Number of children: " + fam.getNumberOfChildren());
-				printError(false, "US15", anom);
+				printError(false, "US15", anom, new int[] {fam.getLineNumber()});
 			}
 		}
 
@@ -455,7 +457,7 @@ public class Functions {
 			            {
 		                	String anom = new String(child1.getId() + " and " + child2.getId() + " are not likely "
 		                            		+ "to be siblings in family: " + fam.getFamID());
-		                	printError(false, "US13", anom);
+		                	printError(false, "US13", anom, new int[] {child1.getLineNumber(), child2.getLineNumber()});
 		                } // if
 		            } // for j
 		        } // for i
@@ -516,14 +518,14 @@ public class Functions {
 				String err = new String("In the family (" + fam.getFamID() + "), the wife (" + fam.getWifeID() + 
 						") is a descendant of the husband (" + fam.getHusbandID() + ")");
                 	
-				printError(true, "US17", err);
+				printError(true, "US17", err, new int[] {fam.getLineNumber()});
 			}
 			if (isDescendantOf(fam.getWifeID(), fam.getHusbandID()))
 			{
 				String err = new String("In the family (" + fam.getFamID() + "), the husband (" + fam.getHusbandID() + 
 						") is a descendant of the wife (" + fam.getWifeID() + ")");
                 	
-				printError(true, "US17", err);
+				printError(true, "US17", err, new int[] {fam.getLineNumber()});
 			}
 		}
 	}
@@ -581,28 +583,28 @@ public class Functions {
 		           	String errStr = new String("Husband ID " + husb.getId() + " date of death " 
 				    + husb.getDateDeath().getStringDate() + " is before marriage date "
 		            + fam.getDateMarried() + " for family " + fam.getFamID());
-		           	printError(true, "US05", errStr);
+		           	printError(true, "US05", errStr, new int[] {fam.getLineNumber(), husb.getLineNumber()});
 				}		
 				if (!wife.getIsAlive() && wife.getDateDeath().isBefore(fam.getMarriedDate()))
 				{
 		           	String errStr = new String("Wife ID " + wife.getId() + " date of death " 
 				    + wife.getDateDeath().getStringDate() + " is before marriage date "
 		            + fam.getDateMarried() + " for family " + fam.getFamID());
-		          	printError(true, "US05", errStr);				
+		          	printError(true, "US05", errStr, new int[] {fam.getLineNumber(), wife.getLineNumber()});				
 				}
 				if (!husb.getIsAlive() && fam.isDivorced() && husb.getDateDeath().isBefore(fam.getDivorcedDate()))
 				{
 		           	String errStr = new String("Husband ID " + husb.getId() + " date of death " 
 				    + husb.getDateDeath().getStringDate() + " is before divorce date "
 		            + fam.getDateDivorced() + " for family " + fam.getFamID());
-		           	printError(true, "US06", errStr);
+		           	printError(true, "US06", errStr, new int[] {fam.getLineNumber(), husb.getLineNumber()});
 				}		
 				if (!wife.getIsAlive() && fam.isDivorced() && wife.getDateDeath().isBefore(fam.getDivorcedDate()))
 				{
 		           	String errStr = new String("Wife ID " + wife.getId() + " date of death " 
 				    + wife.getDateDeath().getStringDate() + " is before divorce date "
 		            + fam.getDateDivorced() + " for family " + fam.getFamID());
-		           	printError(true, "US06", errStr);				
+		           	printError(true, "US06", errStr, new int[] {fam.getLineNumber(), wife.getLineNumber()});				
 				}
 			}// for loop
 			
@@ -644,7 +646,7 @@ public class Functions {
 		                    if (wasMarried(fam, cmp.getMarriedDate()) || wasMarried(cmp, fam.getMarriedDate()))
 		                    {
 		                        String anom = new String ("individual " + indiv.getId() + " is married to more than one person");
-		                        printError(true, "US11", anom);
+		                        printError(true, "US11", anom, new int[] {fam.getLineNumber(), indiv.getLineNumber()});
 		                    }
 		                }
 		            }
@@ -672,13 +674,13 @@ public class Functions {
 	        // Check birthdate here 
 			if (indiv.getDateBirth().isAfter(today)){
 				String errBirth = new String ("Individual " + indiv.getId() + "date of birth is after today");
-				printError(true,"US01",errBirth);
+				printError(true,"US01",errBirth, new int[] {indiv.getLineNumber()});
 			}// end check birth date
 			
 			// check date of death
 			if (indiv.getDateDeath().isAfter(today)){
 				String errDeath = new String ("Individual " + indiv.getId() + "date of death is after today");
-				printError(true,"US01",errDeath );
+				printError(true,"US01",errDeath, new int[] {indiv.getLineNumber()} );
 			}// end check death date
 
 	        if (indiv.getFamS().size() > 1)
@@ -692,13 +694,13 @@ public class Functions {
 	                {
 	                    String errMarried = new String ("individual " + indiv.getId() + " date of marriage " + fam.getDateMarried()
 	                        + " is after today");
-	                    printError(true, "US01", errMarried);
+	                    printError(true, "US01", errMarried, new int[] {fam.getLineNumber(), indiv.getLineNumber()});
 	                }//end of check of marriage date
 	                    
 	                if (fam.getDivorcedDate().isAfter(today))
 	                {
 	                    String errDivorce = new String ("individual " + indiv.getId() + " date of divorce " + fam.getDivorcedDate().getStringDate() + " is after today");
-	                    printError(true, "US01", errDivorce);
+	                    printError(true, "US01", errDivorce, new int[] {fam.getLineNumber(), indiv.getLineNumber()});
 	                }//end of check of divorce date                    
 	            }	 // end family loop           
 	        }// end if family size
@@ -737,8 +739,8 @@ public class Functions {
 		                Cdate momDeathDate = mom.getDateDeath();
 		                if (child.getDateBirth().isAfter(momDeathDate))
 		                {
-			                String errBirthAfter = new String ("Individual " + child.getId() + "date of birth is after mother's date of death");
-			                printError(true,"US09",errBirthAfter);
+			                String errBirthAfter = new String ("Individual " + child.getId() + " date of birth is after mother's date of death");
+			                printError(true,"US09",errBirthAfter, new int[] {fam.getLineNumber()});
 		                }// end check mother's death date
                     }// end mom not alive
                     // Check birthdate prior to father's death (minus 9 months)
@@ -748,8 +750,8 @@ public class Functions {
         	            if ((child.getDateBirth().isAfter(dadDeathDate )) &&
                             (child.getDateBirth().isWithin(dadDeathDate, 0, 9, 0)))
 	     	            {
-			                String errBirthAfter = new String ("Individual " + child.getId() + "date of birth is after dad's date of death plus 9 months");
-			                printError(true,"US09",errBirthAfter);
+			                String errBirthAfter = new String ("Individual " + child.getId() + " date of birth is after dad's date of death plus 9 months");
+			                printError(true,"US09",errBirthAfter, new int[] {fam.getLineNumber(), child.getLineNumber()});
 		                }// check dad's death date
 		            } // end id dad not alive
                     // Check birthdate is before Mother is 60
@@ -757,14 +759,14 @@ public class Functions {
                     {
                     	String errBirth = new String ("Mother's (" + mom.getId() + ") birthdate (" + mom.getDateBirth().get() + ") is more than 60 years before child's (" 
                                           + child.getId() + ") birthdate (" + child.getDateBirth().get() + ")");
-		                printError(true,"US12",errBirth);
+		                printError(true,"US12",errBirth, new int[] {fam.getLineNumber(), mom.getLineNumber()});
                     }
                     // Check birthdate is before fathers is 80
                     if (!child.getDateBirth().isWithin(dad.getDateBirth(), 80, 0, 0))
                     {
                     	String errBirth = new String ("Father's (" + dad.getId() + ") birthdate (" + dad.getDateBirth().get() + ") is more than 80 years before child's (" 
                                           + child.getId() + ") birthdate (" + child.getDateBirth().get() + ")");
-		                printError(true,"US12",errBirth);
+		                printError(true,"US12",errBirth, new int[] {fam.getLineNumber(), dad.getLineNumber()});
                     }
 		        }//end for each child
 		    }// end if num of children > 0 
@@ -785,7 +787,7 @@ public class Functions {
 			
 			if(!(age < 150)){
 				printError(true, "US07", "Individual " +indiv.getId() + " is over 150 years old. Age is " 
-						+ new DecimalFormat("#.##").format(age) + " years.");			
+						+ new DecimalFormat("#.##").format(age) + " years.", new int[] {indiv.getLineNumber()});			
 			}			
 		}
 	}
@@ -809,19 +811,22 @@ public class Functions {
 				indiv = indivContainer.findIndiv(family.getChildID(fMemIndex)); 			//get child with that index
 				if(!(indiv.getFamC().equals(family.getFamID()))){							//if not same fam, error
 					printError(true, "US26", "Individual " + indiv.getId() + " is indicated as a child of family "
-							+ family.getFamID() + " in the family record but does not list the correct family ID.");
+							+ family.getFamID() + " in the family record but does not list the correct family ID.",
+							new int[] {family.getLineNumber(), indiv.getLineNumber()});
 				}
 			}
 			// Check a family's spouses for corresponding FamS tags
 			indiv = indivContainer.findIndiv(family.getHusbandID());						//husband
 			if(!(indiv.getFamS().contains(family.getFamID()))){							//if not same fam, error				
 				printError(true, "US26", "Individual " + indiv.getId() + " is indicated as the husband of family "
-						+ family.getFamID() + " in the family record but does not list the correct family ID.");
+						+ family.getFamID() + " in the family record but does not list the correct family ID.",
+						new int[] {family.getLineNumber(), indiv.getLineNumber()});
 			}			
 			indiv = indivContainer.findIndiv(family.getWifeID());							//wife
 			if(!(indiv.getFamS().contains(family.getFamID()))){							//if not same fam, error
 				printError(true, "US26", "Individual " + indiv.getId() + " is indicated as the wife of family "
-						+ family.getFamID() + " in the family record but does not list the correct family ID.");
+						+ family.getFamID() + " in the family record but does not list the correct family ID.",
+						new int[] {family.getLineNumber(), indiv.getLineNumber()});
 			}					
 		}						
 		
@@ -839,7 +844,8 @@ public class Functions {
 				}
 				if(!flag){
 					printError(true,"US26","Individual "+indiv.getId()+" is indicated as a child of family "+
-							family.getFamID() + " but that family has no record of that individual as a child." );
+							family.getFamID() + " but that family has no record of that individual as a child.",
+							new int[] {family.getLineNumber(), indiv.getLineNumber()});
 				}
 			}
 			
@@ -864,7 +870,8 @@ public class Functions {
 				}
 				if(!flag){
 					printError(true,"US26","Individual "+indiv.getId()+" is indicated as a spouse in family "+
-						family.getFamID() + " but that family has no record of that individual as a spouse." );
+						family.getFamID() + " but that family has no record of that individual as a spouse." ,
+						new int[] {family.getLineNumber(), indiv.getLineNumber()});
 				}
 			}					
 		}	
@@ -905,14 +912,14 @@ public class Functions {
 	{
 		Cindiv indiv;
 	    
-		System.out.println("\nList of Deceased Individuals");
+		System.out.println("\n(US29) List of Deceased Individuals:");
 		
 		for (int num=0; num < indivContainer.getSize(); num++)
 		{
 			indiv = indivContainer.getIndiv(num);
 			if(!indiv.getIsAlive())
 			{
-				System.out.printf("%-20s%s\n", "Name", indiv.getName());
+				System.out.println(indiv.getId());
 				
 			}// end if
 			
@@ -947,7 +954,6 @@ public class Functions {
 			
 			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
 			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
-			
 			System.out.println();
 		}
 	}
@@ -984,7 +990,6 @@ public class Functions {
 					title = "";
 				}
 			}			
-			
 			System.out.println();
 		}
 	}
@@ -1016,13 +1021,17 @@ public class Functions {
 	//   US_ID - User Story ID
 	//   text- text of error/anomaly
 	//********************************************************************
-	private static void printError(Boolean err, String US_ID, String text)
+	private static void printError(Boolean err, String US_ID, String text, int[] lineNum)
 	{
 		String msg = "Error";
 		if (!err) msg = "Anomaly"; 
 		
 		System.out.printf("\n%s: %s: %s\n", msg, US_ID, text);
-			
+		System.out.print(msg + " related to line number(s): ");
+		for(int i = 0; i < lineNum.length; i++){
+			System.out.print(lineNum[i] + " ");			
+		}			
+		System.out.println();
 	}
 	
 	// MISC **************************************************************
@@ -1073,4 +1082,28 @@ public class Functions {
 		}		
 		return dec;
 	}	
+	
+	//********************************************************************
+	// List all individuals over 30 who've never been married.
+	// US31
+	//********************************************************************				
+	public static void listOver30Singles(){
+		Cindiv indiv;
+		boolean flag = false;
+		
+		System.out.println("\n(US31) The following individuals have never been married and are over age 30: ");
+		for (int i = 0; i < indivContainer.getSize(); i++){
+			indiv = indivContainer.getIndiv(i);
+			double age = indiv.getDateBirth().getYearDif(indiv.getDateDeath());
+			
+			if((age < 30 && indiv.getFamS().isEmpty())){
+				flag = true;
+				System.out.println(indiv.getId());
+				
+			}			
+		}
+		if(!flag){
+			System.out.println("None");
+		}
+	}		
 }

@@ -18,8 +18,9 @@ public class Cindiv {
 	private Cdate dateDeath;
 	private String famc;  
 	private LinkedList<String> fams;
+	private int lineNumber;
 	
-	public Cindiv(String i){
+	public Cindiv(String i, int lineNum){
 		id = i;
 		name = "";
 		gender = "None";
@@ -28,6 +29,7 @@ public class Cindiv {
 		dateDeath = new Cdate();
 		famc = "None";
 		fams = new LinkedList<String>();
+		lineNumber = lineNum;
 	}
 	public String getId(){
 		return id;
@@ -82,6 +84,9 @@ public class Cindiv {
 		Boolean retVal = false;
 		if (!isAlive) retVal = dateDeath.isBefore(dateBirth);
 		return retVal;
+	}
+	public int getLineNumber(){
+		return lineNumber;
 	}
 	
 }

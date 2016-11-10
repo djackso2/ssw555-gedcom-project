@@ -23,7 +23,7 @@ public class FamilyContainer extends GedcomContainer<CFamily> {
 		return null;
 	}
 	
-	public CFamily addFam(String id)
+	public CFamily addFam(String id, int lineNum)
 	{
 		int indx;
 		CFamily fam;
@@ -39,7 +39,7 @@ public class FamilyContainer extends GedcomContainer<CFamily> {
 				break;
 			}
 		}
-		fam = new CFamily(id);
+		fam = new CFamily(id, lineNum);
 		myList.add(indx, fam);
 		return( myList.get(indx));
 	}

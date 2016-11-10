@@ -44,15 +44,15 @@ public class Functions_test {
 	
 	@Test
 	public void testIndivCompare(){
-		Cindiv ti1 = new Cindiv("Test ID");
+		Cindiv ti1 = new Cindiv("Test ID", 1);
 		ti1.setName("Test Individual");
 		ti1.setDateBirth("11 OCT 2016");
 		
-		Cindiv ti2 = new Cindiv("Test ID");
+		Cindiv ti2 = new Cindiv("Test ID", 2);
 		ti2.setName("Test Individual");
 		ti2.setDateBirth("11 OCT 2016");
 		
-		Cindiv ti3 = new Cindiv("Test ID");
+		Cindiv ti3 = new Cindiv("Test ID", 3);
 		ti3.setName("DifferentTest Individual");
 		ti3.setDateBirth("10 OCT 2016");
 		

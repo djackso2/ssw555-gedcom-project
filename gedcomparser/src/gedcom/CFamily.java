@@ -18,8 +18,9 @@ public class CFamily{
 	private Cdate dateMarried; //String for now, can be changed
 	private Cdate dateDivorced; //String for now, can be changed
 	private Boolean isDivorced;
+	private int lineNumber;
 	
-	public CFamily(String fID) {
+	public CFamily(String fID, int lineNum) {
 		famID = fID;
 		childrenIDs = new LinkedList<String>();
 		wifeID = "None";
@@ -27,6 +28,7 @@ public class CFamily{
 		dateMarried = new Cdate();
 		dateDivorced = new Cdate();
 		isDivorced = false;
+		lineNumber = lineNum;
 	}
 	
 	//General info getters and setters
@@ -82,5 +84,7 @@ public class CFamily{
 	public int getNumberOfChildren(){
 		return childrenIDs.size();
 	}	
-
+	public int getLineNumber(){
+		return lineNumber;
+	}
 }

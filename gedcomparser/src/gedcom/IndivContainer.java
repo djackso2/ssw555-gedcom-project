@@ -15,7 +15,7 @@ public class IndivContainer extends GedcomContainer<Cindiv> {
 	   return( myList.get(indx));
 	}
 	
-	public Cindiv addIndiv(String id)
+	public Cindiv addIndiv(String id, int lineNum)
 	{
 		int indx;
 		Cindiv indiv;
@@ -31,7 +31,7 @@ public class IndivContainer extends GedcomContainer<Cindiv> {
 				break;
 			}
 		}
-		indiv = new Cindiv(id);
+		indiv = new Cindiv(id, lineNum);
 		myList.add(indx, indiv);
 		return( myList.get(indx));
 	}
