@@ -884,19 +884,15 @@ public class Functions {
 	// US27
 	//***************************************************************************************
 	
-	public static void determineCurrentAge(){
-		Cindiv indiv;
+	public static void determineCurrentAge(Cindiv indiv){
+		
 		Cdate today = new Cdate();
 		double currentAge = 0;
 		
-		for (int i = 0; i < indivContainer.getSize(); i++)
-		{
-			indiv = indivContainer.getIndiv(i);
-			currentAge = indiv.getDateBirth().getYearDif(today);
-		}
-            
-			System.out.print("Current Age is       ");
-			System.out.format("%-10.3f%n", currentAge);
+		currentAge = indiv.getDateBirth().getYearDif(today);
+
+		System.out.print("Current Age is(US27)");
+		System.out.format("%-10.3f%n", currentAge);
 
 	  }// end determineCurrentAge
 	
@@ -950,7 +946,7 @@ public class Functions {
 			if(!indiv.getIsAlive())
 				System.out.printf("%-20s%s\n", "Date of Death:", indiv.getDateDeath().get());
             		//added for US27
-            		else determineCurrentAge();
+            		else determineCurrentAge(indiv);
 			
 			System.out.printf("%-20s%s\n", "Child of Family:", indiv.getFamC());
 			System.out.printf("%-20s%s\n", "Spouse of Family:", indiv.getFamS());
@@ -1096,7 +1092,7 @@ public class Functions {
 			indiv = indivContainer.getIndiv(i);
 			double age = indiv.getDateBirth().getYearDif(indiv.getDateDeath());
 			
-			if((age < 30 && indiv.getFamS().isEmpty())){
+			if((age > 30 && indiv.getFamS().isEmpty())){
 				flag = true;
 				System.out.println(indiv.getId());
 				
